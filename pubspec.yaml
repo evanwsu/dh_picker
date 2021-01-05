@@ -1,0 +1,19 @@
+name: dh_picker
+description: A new Flutter src.picker package.
+version: 0.0.1
+author: evanwo
+homepage: https://github.com/evansherry/dh_picker
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.17.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
