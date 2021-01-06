@@ -31,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    List<int> datas = [1, 2, 3, 4, 5];
+    List datas = ["dwh", "shsh", "哈哈", "售后", "收卷机"];
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
             SizedBox(height: 20,),
             Container(
               width: 200,
-              height: 300,
+              height: 150,
               child: DHPicker(
                   children: datas.map((e) => Center(
                     child: Text(e.toString()),
@@ -57,6 +57,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     print('selected  value: $value');
                   },
                 unit: Text("℃"),
+                unitPadding: EdgeInsets.only(left: 60, bottom: 16),
+              ),
+            ),
+            SizedBox(height: 20,),
+            Container(
+              width: 200,
+              height: 150,
+              child: NumPicker(
+                max: 21,
+                min: 1,
+                interval: 2,
+                format: (value) => "$value号",
+                itemExtent: 40,
+                onSelectedItemChanged: (value) {
+                  print('selected  value: $value');
+                },
+                unit: Text("℃"),
+                unitPadding: EdgeInsets.only(left: 60, bottom: 16),
               ),
             )
           ],
