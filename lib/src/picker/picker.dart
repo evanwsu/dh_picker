@@ -25,6 +25,7 @@ class DHPicker extends StatefulWidget {
   final Widget selectionOverlay;
   final Widget unit;
   final EdgeInsetsGeometry unitPadding;
+  final AlignmentGeometry alignment;
 
   DHPicker({
     Key key,
@@ -38,6 +39,7 @@ class DHPicker extends StatefulWidget {
     this.selectionOverlay = const DefaultSelectionOverlay(),
     this.unit,
     this.unitPadding,
+    this.alignment = Alignment.center,
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
     @required List<Widget> children,
@@ -54,6 +56,37 @@ class DHPicker extends StatefulWidget {
         childDelegate = looping
             ? ListWheelChildLoopingListDelegate(children: children)
             : ListWheelChildListDelegate(children: children),
+        super(key: key);
+
+
+  DHPicker.builder({
+    Key key,
+    this.diameterRatio = kDefaultDiameterRatio,
+    this.backgroundColor,
+    this.offAxisFraction = 0.0,
+    this.useMagnifier = false,
+    this.magnification = 1.0,
+    this.scrollController,
+    this.squeeze = kSqueeze,
+    this.unit,
+    this.unitPadding,
+    this.alignment = Alignment.center,
+    @required this.itemExtent,
+    @required this.onSelectedItemChanged,
+    @required NullableIndexedWidgetBuilder itemBuilder,
+    int childCount,
+    this.selectionOverlay = const DefaultSelectionOverlay(),
+  })  : assert(itemBuilder != null),
+        assert(diameterRatio != null),
+        assert(diameterRatio > 0.0,
+            RenderListWheelViewport.diameterRatioZeroMessage),
+        assert(magnification > 0),
+        assert(itemExtent != null),
+        assert(itemExtent > 0),
+        assert(squeeze != null),
+        assert(squeeze > 0),
+        childDelegate = ListWheelChildBuilderDelegate(
+            builder: itemBuilder, childCount: childCount),
         super(key: key);
 
   @override
@@ -118,10 +151,14 @@ class _DHPickerState extends State<DHPicker> {
   Widget _buildSelectionOverlay(Widget selectionOverlay) {
     final double height = widget.itemExtent * widget.magnification;
     Widget unit;
-    if(widget.unit != null){
-      unit = UnitWrap(child: widget.unit, padding: widget.unitPadding,);
+    if (widget.unit != null) {
+      unit = UnitWrap(
+        child: widget.unit,
+        padding: widget.unitPadding,
+        alignment: widget.alignment,
+      );
     }
-    
+
     return IgnorePointer(
       child: Center(
         child: ConstrainedBox(
@@ -145,8 +182,13 @@ class _DHPickerState extends State<DHPicker> {
 class UnitWrap extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
+  final AlignmentGeometry alignment;
 
-  UnitWrap({Key key, @required this.child, this.padding}) : super(key: key);
+  UnitWrap({Key key,
+    @required this.child,
+    this.padding,
+    this.alignment,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +198,8 @@ class UnitWrap extends StatelessWidget {
         padding: padding,
         child: child,
       );
-    return Center(
+    return Align(
+      alignment: alignment,
       child: child,
     );
   }

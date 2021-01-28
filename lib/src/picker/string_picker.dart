@@ -1,15 +1,12 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-
 import 'picker.dart';
 
 ///@author Evan
-///@since 2020/12/31
+///@since 2021/1/25
 ///@describe:
 
-typedef NumIndexFormatter = String Function(num value);
-
-class NumberPicker extends StatelessWidget {
+class StringPicker extends StatelessWidget {
   final double diameterRatio;
   final Color backgroundColor;
   final double offAxisFraction;
@@ -18,19 +15,16 @@ class NumberPicker extends StatelessWidget {
   final FixedExtentScrollController scrollController;
   final double itemExtent;
   final double squeeze;
-  final ValueChanged<num> onSelectedItemChanged;
+  final ValueChanged<String> onSelectedItemChanged;
   final Widget selectionOverlay;
   final bool looping;
   final TextStyle textStyle;
-  final num max;
-  final num min;
-  final num interval;
-  final NumIndexFormatter format;
+  final List<String> data;
   final Widget unit;
   final EdgeInsetsGeometry unitPadding;
   final AlignmentGeometry alignment;
 
-  NumberPicker({
+  StringPicker({
     Key key,
     this.diameterRatio = kDefaultDiameterRatio,
     this.backgroundColor,
@@ -43,18 +37,12 @@ class NumberPicker extends StatelessWidget {
     this.looping = false,
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
-    @required this.max,
-    @required this.min,
-    @required this.interval,
-    this.format,
+    @required this.data,
     this.textStyle,
     this.unit,
     this.unitPadding,
     this.alignment = Alignment.center,
-  })  : assert(min != null),
-        assert(max != null),
-        assert(min <= max),
-        assert(diameterRatio != null),
+  })  : assert(diameterRatio != null),
         assert(diameterRatio > 0.0,
             RenderListWheelViewport.diameterRatioZeroMessage),
         assert(magnification > 0),
@@ -62,22 +50,20 @@ class NumberPicker extends StatelessWidget {
         assert(itemExtent > 0),
         assert(squeeze != null),
         assert(squeeze > 0),
+        assert(data != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int count = (max - min) ~/ interval + 1;
-    Function format = this.format ?? (val) => "$val";
-    List<Widget> children = List.generate(
-      count,
-      (index) => Align(
-        alignment: alignment,
-        child: Text(
-          format(min + interval * index),
-          style: textStyle,
-        ),
-      ),
-    );
+    List<Widget> children = data
+        .map((e) => Align(
+              alignment: alignment,
+              child: Text(
+                e,
+                style: textStyle,
+              ),
+            ))
+        .toList();
 
     return DHPicker(
       key: key,
@@ -89,14 +75,14 @@ class NumberPicker extends StatelessWidget {
       scrollController: scrollController,
       squeeze: squeeze,
       selectionOverlay: selectionOverlay,
+      onSelectedItemChanged: (int index) =>
+          onSelectedItemChanged?.call(data[index]),
+      itemExtent: itemExtent,
       unit: unit,
       unitPadding: unitPadding,
       alignment: alignment,
-      onSelectedItemChanged: (int index) =>
-          onSelectedItemChanged?.call(min + index * interval),
-      itemExtent: itemExtent,
-      children: children,
       looping: looping,
+      children: children,
     );
   }
 }
