@@ -1,4 +1,5 @@
 import 'dart:core';
+
 import '../../src/date_util.dart';
 import '../date_format.dart';
 import '../date_util.dart';
@@ -46,10 +47,15 @@ abstract class BaseDateTimeModel {
   /// 更新第三列索引
   void updateThirdIndex(int index) => thirdIndex = index;
 
-  /// 分割线
-  List<String> get divider;
+  List<String> _dividers;
 
-  List<int> get weights;
+  List<int> _weights;
+
+  /// 分割线
+  List<String> get dividers => _dividers;
+
+  /// 布局权重
+  List<int> get weights => _weights;
 }
 
 /// 日期(年月日)选择器
@@ -61,7 +67,13 @@ class DatePickerModel extends BaseDateTimeModel {
     DateTime currentTime,
     DateTime maxTime,
     DateTime minTime,
-  }) {
+    List<int> weights,
+    List<String> dividers,
+  })  : assert(weights == null || weights.length == 3),
+        assert(dividers == null || dividers.length == 2) {
+    _weights = weights ?? [1, 1, 1];
+    _dividers = dividers ?? ['', ''];
+
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
     this.minTime = minTime ?? DateTime(1970, 1, 1);
 
@@ -215,12 +227,6 @@ class DatePickerModel extends BaseDateTimeModel {
     return null;
   }
 
-  @override
-  List<String> get divider => ['', ''];
-
-  @override
-  List<int> get weights => [1, 1, 1];
-
   /// 当前月最大天数
   int _maxDayOfCurrentMonth() {
     int dayCount = calcDateCount(currentTime.year, currentTime.month);
@@ -260,8 +266,17 @@ class TimePickerModel extends BaseDateTimeModel {
   /// 是否显示秒
   bool showSeconds;
 
-  TimePickerModel({DateTime currentTime, this.showSeconds: false})
-      : assert(showSeconds != null) {
+  TimePickerModel({
+    DateTime currentTime,
+    this.showSeconds: false,
+    List<int> weights,
+    List<String> dividers,
+  })  : assert(weights == null || weights.length == 3),
+        assert(dividers == null || dividers.length == 2),
+        assert(showSeconds != null) {
+    _weights = weights ?? [1, 1, showSeconds ? 1 : 0];
+    _dividers = dividers ?? [':', showSeconds ? ':' : ''];
+
     this.currentTime = currentTime ?? DateTime.now();
 
     firstIndex = this.currentTime.hour;
@@ -304,12 +319,6 @@ class TimePickerModel extends BaseDateTimeModel {
         : DateTime(currentTime.year, currentTime.month, currentTime.day,
             thirdIndex, secondIndex, firstIndex);
   }
-
-  @override
-  List<String> get divider => [':', showSeconds ? ':' : ''];
-
-  @override
-  List<int> get weights => [1, 1, showSeconds ? 1 : 0];
 }
 
 /// 日期时间选择器模型
@@ -326,7 +335,18 @@ class DateTimePickerModel extends DatePickerModel {
     DateTime maxTime,
     DateTime minTime,
     this.showYears = true,
-  }) : super(currentTime: currentTime, maxTime: maxTime, minTime: minTime) {
+    List<int> weights,
+    List<String> dividers,
+  })  : assert(weights == null || weights.length == 5),
+        assert(dividers == null || dividers.length == 4),
+        super(
+          currentTime: currentTime,
+          maxTime: maxTime,
+          minTime: minTime,
+        ) {
+    _weights = weights ?? [showYears ? 2 : 0, 1, 1, 1, 1];
+    _dividers = dividers ?? ['', '', '', ':'];
+
     int minHour = _minHourOfCurrentDay();
     int minMinute = _minMinuteOfCurrentHour();
 
@@ -506,12 +526,6 @@ class DateTimePickerModel extends DatePickerModel {
             minMinute + index,
           );
   }
-
-  @override
-  List<int> get weights => [showYears ? 2 : 0, 1, 1, 1, 1];
-
-  @override
-  List<String> get divider => ['', '', '', ':'];
 
   bool isAtSameDay(DateTime day1, DateTime day2) {
     return day1 != null &&

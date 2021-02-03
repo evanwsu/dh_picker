@@ -18,10 +18,10 @@ class StringPicker extends StatelessWidget {
   final ValueChanged<String> onSelectedItemChanged;
   final Widget selectionOverlay;
   final bool looping;
-  final TextStyle textStyle;
+  final TextStyle itemStyle;
   final List<String> data;
-  final Widget unit;
-  final EdgeInsetsGeometry unitPadding;
+  final Widget label;
+  final EdgeInsetsGeometry labelPadding;
   final AlignmentGeometry alignment;
 
   StringPicker({
@@ -38,9 +38,9 @@ class StringPicker extends StatelessWidget {
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
     @required this.data,
-    this.textStyle,
-    this.unit,
-    this.unitPadding,
+    this.itemStyle,
+    this.label,
+    this.labelPadding,
     this.alignment = Alignment.center,
   })  : assert(diameterRatio != null),
         assert(diameterRatio > 0.0,
@@ -60,7 +60,7 @@ class StringPicker extends StatelessWidget {
               alignment: alignment,
               child: Text(
                 e,
-                style: textStyle,
+                style: itemStyle,
               ),
             ))
         .toList();
@@ -78,8 +78,8 @@ class StringPicker extends StatelessWidget {
       onSelectedItemChanged: (int index) =>
           onSelectedItemChanged?.call(data[index]),
       itemExtent: itemExtent,
-      unit: unit,
-      unitPadding: unitPadding,
+      label: label,
+      labelPadding: labelPadding,
       alignment: alignment,
       looping: looping,
       children: children,

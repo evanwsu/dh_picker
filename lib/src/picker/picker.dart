@@ -23,8 +23,8 @@ class DHPicker extends StatefulWidget {
   final ValueChanged<int> onSelectedItemChanged;
   final ListWheelChildDelegate childDelegate;
   final Widget selectionOverlay;
-  final Widget unit;
-  final EdgeInsetsGeometry unitPadding;
+  final Widget label;
+  final EdgeInsetsGeometry labelPadding;
   final AlignmentGeometry alignment;
 
   DHPicker({
@@ -37,8 +37,8 @@ class DHPicker extends StatefulWidget {
     this.scrollController,
     this.squeeze = kSqueeze,
     this.selectionOverlay = const DefaultSelectionOverlay(),
-    this.unit,
-    this.unitPadding,
+    this.label,
+    this.labelPadding,
     this.alignment = Alignment.center,
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
@@ -68,8 +68,8 @@ class DHPicker extends StatefulWidget {
     this.magnification = 1.0,
     this.scrollController,
     this.squeeze = kSqueeze,
-    this.unit,
-    this.unitPadding,
+    this.label,
+    this.labelPadding,
     this.alignment = Alignment.center,
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
@@ -151,10 +151,10 @@ class _DHPickerState extends State<DHPicker> {
   Widget _buildSelectionOverlay(Widget selectionOverlay) {
     final double height = widget.itemExtent * widget.magnification;
     Widget unit;
-    if (widget.unit != null) {
+    if (widget.label != null) {
       unit = UnitWrap(
-        child: widget.unit,
-        padding: widget.unitPadding,
+        child: widget.label,
+        padding: widget.labelPadding,
         alignment: widget.alignment,
       );
     }

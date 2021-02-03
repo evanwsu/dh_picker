@@ -1,8 +1,13 @@
 import 'package:dh_picker/dh_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
+  // var local = 'en';
+  var local = 'zh';
+  Intl.defaultLocale = local;
+
   runApp(MyApp());
 }
 
@@ -31,54 +36,86 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    List datas = ["dwh", "shsh", "哈哈", "售后", "收卷机"];
+    DateTime selectTime;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
+      body: Column(
+        children: <Widget>[
+          SizedBox(
+            height: 20,
+          ),
+          Container(
+            height: 150,
+            child: NumberPicker(
+              max: 21,
+              min: 1,
+              interval: 2,
+              indexFormat: (value) => "$value+",
+              itemExtent: 40,
+              onSelectedItemChanged: (value) {
+                print('selected  value: $value');
+              },
+              alignment: Alignment.center,
+              label: Text("℃"),
+              labelPadding: EdgeInsets.only(left: 50, bottom: 16),
             ),
-            SizedBox(height: 20,),
-            Container(
-              width: 200,
-              height: 150,
-              child: DHPicker(
-                  children: datas.map((e) => Center(
-                    child: Text(e.toString()),
-                  )).toList(),
-                  itemExtent: 40,
-                  onSelectedItemChanged: (value) {
-                    print('selected  value: $value');
+          ),
+          DateTimePicker(
+            pickerModel: DateTimePickerModel(
+              maxTime: DateTime(2028, 12, 1, 5, 6),
+              minTime: DateTime(2012, 11, 2, 3, 4),
+              showYears: false,
+              weights: [2, 1, 1, 1, 1],
+            ),
+            onDateTimeChanged: (DateTime value) {
+              print('date time :  $value');
+            },
+            paddingBuilder: (int index) {
+              return EdgeInsets.only(
+                  left: index == 0 ? 16 : 10,
+                  top: 16,
+                  bottom: 16,
+                  right: index == 5 ? 16 : 10);
+            },
+          ),
+          FlatButton(
+            onPressed: () {
+              showPicker(context, builder: (BuildContext context) {
+                return DateTimePickerWidget(
+                  onConfirm: (DateTime dateTime) {
+                    selectTime = dateTime;
+                    print('date time: $dateTime');
                   },
-                unit: Text("℃"),
-                unitPadding: EdgeInsets.only(left: 60, bottom: 16),
-              ),
-            ),
-            SizedBox(height: 20,),
-            Container(
-              width: 200,
-              height: 150,
-              child: NumPicker(
-                max: 21,
-                min: 1,
-                interval: 2,
-                format: (value) => "$value号",
-                itemExtent: 40,
-                onSelectedItemChanged: (value) {
-                  print('selected  value: $value');
-                },
-                unit: Text("℃"),
-                unitPadding: EdgeInsets.only(left: 60, bottom: 16),
-              ),
-            )
-          ],
-        ),
+                  title: "选择日期",
+                  onCancel: () {
+                    print('取消了');
+                  },
+                  pickerTheme: PickerTheme(
+                    height: 160.0,
+                  ),
+                  pickerModel: DateTimePickerModel(
+                    maxTime: DateTime(2022, 12, 1, 5, 6),
+                    minTime: DateTime(2020, 11, 2, 3, 4),
+                    currentTime: selectTime,
+                  ),
+                  paddingBuilder: (int index) {
+                    return EdgeInsets.only(
+                        left: index == 0 ? 16 : 10,
+                        top: 0,
+                        bottom: 0,
+                        right: index == 5 ? 16 : 10);
+                  },
+                  selectionOverlayBuilder: (int index) => null,
+                );
+                // return Text("hahah");
+              });
+            },
+            child: Text("show date picker"),
+          ),
+        ],
       ),
     );
   }

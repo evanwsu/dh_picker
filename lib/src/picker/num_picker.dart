@@ -25,9 +25,9 @@ class NumberPicker extends StatelessWidget {
   final num max;
   final num min;
   final num interval;
-  final NumIndexFormatter format;
-  final Widget unit;
-  final EdgeInsetsGeometry unitPadding;
+  final NumIndexFormatter indexFormat;
+  final Widget label;
+  final EdgeInsetsGeometry labelPadding;
   final AlignmentGeometry alignment;
 
   NumberPicker({
@@ -46,10 +46,10 @@ class NumberPicker extends StatelessWidget {
     @required this.max,
     @required this.min,
     @required this.interval,
-    this.format,
+    this.indexFormat,
     this.textStyle,
-    this.unit,
-    this.unitPadding,
+    this.label,
+    this.labelPadding,
     this.alignment = Alignment.center,
   })  : assert(min != null),
         assert(max != null),
@@ -67,7 +67,7 @@ class NumberPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int count = (max - min) ~/ interval + 1;
-    Function format = this.format ?? (val) => "$val";
+    Function format = this.indexFormat ?? (val) => "$val";
     List<Widget> children = List.generate(
       count,
       (index) => Align(
@@ -89,8 +89,8 @@ class NumberPicker extends StatelessWidget {
       scrollController: scrollController,
       squeeze: squeeze,
       selectionOverlay: selectionOverlay,
-      unit: unit,
-      unitPadding: unitPadding,
+      label: label,
+      labelPadding: labelPadding,
       alignment: alignment,
       onSelectedItemChanged: (int index) =>
           onSelectedItemChanged?.call(min + index * interval),
