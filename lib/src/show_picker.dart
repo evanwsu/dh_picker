@@ -264,9 +264,9 @@ class TitleActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String lang = language;
-    String confirm = this.confirm ?? i18nObjInLanguage(lang)['done'];
-    String cancel = this.cancel ?? i18nObjInLanguage(lang)['cancel'];
+    String language = getLanguage();
+    String confirm = this.confirm ?? i18nObjInLanguage(language)['done'];
+    String cancel = this.cancel ?? i18nObjInLanguage(language)['cancel'];
     return Container(
       height: theme.height,
       decoration: BoxDecoration(

@@ -278,3 +278,10 @@ final i18nModel = {
 
 Map<String, dynamic> i18nObjInLanguage(String language) =>
     i18nModel[language] ?? i18nModel['en'];
+
+String i18nObjInLanguageLookup(String language, String key, int index){
+  final i18n = i18nObjInLanguage(language);
+  final i18nKey = i18n[key] as List<String>;
+  return i18nKey[index];
+}
+

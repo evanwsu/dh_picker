@@ -56,6 +56,11 @@ abstract class BaseDateTimeModel {
 
   /// 布局权重
   List<int> get weights => _weights;
+
+  /// 年月日标签
+  List<bool> _labels;
+
+  List<String> _formats;
 }
 
 /// 日期(年月日)选择器
@@ -67,12 +72,18 @@ class DatePickerModel extends BaseDateTimeModel {
     DateTime currentTime,
     DateTime maxTime,
     DateTime minTime,
+    List<String> formats,
+    List<bool> labels,
     List<int> weights,
     List<String> dividers,
   })  : assert(weights == null || weights.length == 3),
-        assert(dividers == null || dividers.length == 2) {
+        assert(dividers == null || dividers.length == 2),
+        assert(formats == null || formats.length == 3),
+        assert(labels == null || labels.length == 3) {
     _weights = weights ?? [1, 1, 1];
     _dividers = dividers ?? ['', ''];
+    _labels = labels ?? [true, true, true];
+    _formats = formats ?? [yyyy, MM, dd];
 
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
     this.minTime = minTime ?? DateTime(1970, 1, 1);
@@ -98,8 +109,10 @@ class DatePickerModel extends BaseDateTimeModel {
 
   /// 填充年数据
   void _fillYearList() {
+    String labelYear = _labels[0] ? localeYear() : '';
+    List<String> formats = [_formats[0], labelYear];
     firstList = List.generate(maxTime.year - minTime.year + 1, (int index) {
-      return '${minTime.year + index}${localeYear()}';
+      return '${formatDate(formats, year: minTime.year + index)}';
     });
   }
 
@@ -107,19 +120,21 @@ class DatePickerModel extends BaseDateTimeModel {
   void _fillMonthList() {
     int minMonth = _minMonthOfCurrentYear();
     int maxMonth = _maxMonthOfCurrentYear();
-
-    secondList = List.generate(maxMonth - minMonth + 1, (int index) {
-      return '${localeMonth(minMonth + index)}';
-    });
+    String labelMonth =
+        _labels[1] && _formats[1].startsWith('m') ? localeMonth() : '';
+    List<String> formats = [_formats[1], labelMonth];
+    secondList = List.generate(maxMonth - minMonth + 1,
+        (int index) => '${formatDate(formats, month: minMonth + index)}');
   }
 
   /// 填充日数据
   void _fillDayList() {
     int maxDay = _maxDayOfCurrentMonth();
     int minDay = _minDayOfCurrentMonth();
-
+    String labelDay = _labels[2] ? localeDay() : '';
+    List<String> formats = [_formats[2], labelDay];
     thirdList = List.generate(maxDay - minDay + 1, (int index) {
-      return '${minDay + index}${localeDay()}';
+      return '${formatDate(formats, day: minDay + index)}';
     });
   }
 
@@ -335,6 +350,8 @@ class DateTimePickerModel extends DatePickerModel {
     DateTime maxTime,
     DateTime minTime,
     this.showYears = true,
+    List<String> formats,
+    List<bool> labels,
     List<int> weights,
     List<String> dividers,
   })  : assert(weights == null || weights.length == 5),
@@ -343,6 +360,8 @@ class DateTimePickerModel extends DatePickerModel {
           currentTime: currentTime,
           maxTime: maxTime,
           minTime: minTime,
+          labels: labels,
+          formats: formats,
         ) {
     _weights = weights ?? [showYears ? 2 : 0, 1, 1, 1, 1];
     _dividers = dividers ?? ['', '', '', ':'];

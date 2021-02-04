@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 void main() {
-  // var local = 'en';
-  var local = 'zh';
+  var local = 'en';
   Intl.defaultLocale = local;
 
   runApp(MyApp());
@@ -69,6 +68,8 @@ class _MyHomePageState extends State<MyHomePage> {
               minTime: DateTime(2012, 11, 2, 3, 4),
               showYears: false,
               weights: [2, 1, 1, 1, 1],
+              labels: [false, true, true],
+              formats: ['yyyy', 'M', 'dd'],
             ),
             onDateTimeChanged: (DateTime value) {
               print('date time :  $value');
@@ -100,6 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     maxTime: DateTime(2022, 12, 1, 5, 6),
                     minTime: DateTime(2020, 11, 2, 3, 4),
                     currentTime: selectTime,
+                    showYears: false,
+                    dividers: ['', '/', '', ':' ],
                   ),
                   paddingBuilder: (int index) {
                     return EdgeInsets.only(
@@ -109,6 +112,16 @@ class _MyHomePageState extends State<MyHomePage> {
                         right: index == 5 ? 16 : 10);
                   },
                   selectionOverlayBuilder: (int index) => null,
+                  header: Container(
+                    padding: EdgeInsets.only(top: 20, bottom: 10),
+                    color: Colors.white,
+                    child: Row(
+                      children: [
+                        Expanded(child: Center(child: Text("结束日期"),)),
+                        Expanded(child: Center(child: Text("结束时间"),))
+                      ],
+                    ),
+                  ),
                 );
                 // return Text("hahah");
               });
