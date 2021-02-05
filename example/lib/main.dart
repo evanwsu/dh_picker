@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 void main() {
-  var local = 'en';
+  var local = 'zh';
   Intl.defaultLocale = local;
 
   runApp(MyApp());
@@ -57,30 +57,25 @@ class _MyHomePageState extends State<MyHomePage> {
               onSelectedItemChanged: (value) {
                 print('selected  value: $value');
               },
-              alignment: Alignment.center,
+              labelAlignment: Alignment.center,
               label: Text("℃"),
               labelPadding: EdgeInsets.only(left: 50, bottom: 16),
             ),
           ),
           DateTimePicker(
-            pickerModel: DateTimePickerModel(
+            pickerModel: DatePickerModel(
               maxTime: DateTime(2028, 12, 1, 5, 6),
               minTime: DateTime(2012, 11, 2, 3, 4),
-              showYears: false,
-              weights: [2, 1, 1, 1, 1],
-              labels: [false, true, true],
+              weights: [1, 1, 1],
+              labels: [true, true, true],
               formats: ['yyyy', 'M', 'dd'],
             ),
             onDateTimeChanged: (DateTime value) {
               print('date time :  $value');
             },
-            paddingBuilder: (int index) {
-              return EdgeInsets.only(
-                  left: index == 0 ? 16 : 10,
-                  top: 16,
-                  bottom: 16,
-                  right: index == 5 ? 16 : 10);
-            },
+            theme: PickerTheme(
+              padding: EdgeInsets.symmetric(horizontal: 20),
+            ),
           ),
           FlatButton(
             onPressed: () {
@@ -91,39 +86,56 @@ class _MyHomePageState extends State<MyHomePage> {
                     print('date time: $dateTime');
                   },
                   title: "选择日期",
+                  titleActionTheme: TitleActionTheme(
+                    decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0),
+                                topRight: Radius.circular(10.0)))),
+                  ),
                   onCancel: () {
                     print('取消了');
                   },
                   pickerTheme: PickerTheme(
-                    height: 160.0,
+                      height: 180.0,
                   ),
                   pickerModel: DateTimePickerModel(
                     maxTime: DateTime(2022, 12, 1, 5, 6),
                     minTime: DateTime(2020, 11, 2, 3, 4),
                     currentTime: selectTime,
-                    showYears: false,
-                    dividers: ['', '/', '', ':' ],
+                    // dividers: ['', '/', '', ':'],
                   ),
-                  paddingBuilder: (int index) {
-                    return EdgeInsets.only(
-                        left: index == 0 ? 16 : 10,
-                        top: 0,
-                        bottom: 0,
-                        right: index == 5 ? 16 : 10);
-                  },
+                  pickerOverlay: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(width: 18,),
+                      Expanded(child: DefaultSelectionOverlay(borderColor: Colors.red,)),
+                      SizedBox(width: 27,),
+                      Expanded(child: DefaultSelectionOverlay(borderColor: Colors.red,)),
+                      SizedBox(width: 27,),
+                      Expanded(child: DefaultSelectionOverlay(borderColor: Colors.red,)),
+                      SizedBox(width: 18,),
+                    ],
+                  ),
                   selectionOverlayBuilder: (int index) => null,
-                  header: Container(
-                    padding: EdgeInsets.only(top: 20, bottom: 10),
-                    color: Colors.white,
-                    child: Row(
-                      children: [
-                        Expanded(child: Center(child: Text("结束日期"),)),
-                        Expanded(child: Center(child: Text("结束时间"),))
-                      ],
-                    ),
-                  ),
+                  // header: Container(
+                  //   padding: EdgeInsets.only(top: 20, bottom: 10),
+                  //   color: Colors.white,
+                  //   child: Row(
+                  //     children: [
+                  //       Expanded(
+                  //           child: Center(
+                  //         child: Text("结束日期"),
+                  //       )),
+                  //       Expanded(
+                  //           child: Center(
+                  //         child: Text("结束时间"),
+                  //       ))
+                  //     ],
+                  //   ),
+                  // ),
                 );
-                // return Text("hahah");
               });
             },
             child: Text("show date picker"),

@@ -22,7 +22,7 @@ class StringPicker extends StatelessWidget {
   final List<String> data;
   final Widget label;
   final EdgeInsetsGeometry labelPadding;
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry labelAlignment;
 
   StringPicker({
     Key key,
@@ -41,7 +41,7 @@ class StringPicker extends StatelessWidget {
     this.itemStyle,
     this.label,
     this.labelPadding,
-    this.alignment = Alignment.center,
+    this.labelAlignment = Alignment.center,
   })  : assert(diameterRatio != null),
         assert(diameterRatio > 0.0,
             RenderListWheelViewport.diameterRatioZeroMessage),
@@ -57,7 +57,7 @@ class StringPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> children = data
         .map((e) => Align(
-              alignment: alignment,
+              alignment: labelAlignment,
               child: Text(
                 e,
                 style: itemStyle,
@@ -80,7 +80,7 @@ class StringPicker extends StatelessWidget {
       itemExtent: itemExtent,
       label: label,
       labelPadding: labelPadding,
-      alignment: alignment,
+      labelAlignment: labelAlignment,
       looping: looping,
       children: children,
     );

@@ -28,7 +28,7 @@ class NumberPicker extends StatelessWidget {
   final NumIndexFormatter indexFormat;
   final Widget label;
   final EdgeInsetsGeometry labelPadding;
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry labelAlignment;
 
   NumberPicker({
     Key key,
@@ -50,7 +50,7 @@ class NumberPicker extends StatelessWidget {
     this.textStyle,
     this.label,
     this.labelPadding,
-    this.alignment = Alignment.center,
+    this.labelAlignment = Alignment.center,
   })  : assert(min != null),
         assert(max != null),
         assert(min <= max),
@@ -71,7 +71,7 @@ class NumberPicker extends StatelessWidget {
     List<Widget> children = List.generate(
       count,
       (index) => Align(
-        alignment: alignment,
+        alignment: labelAlignment,
         child: Text(
           format(min + interval * index),
           style: textStyle,
@@ -91,7 +91,7 @@ class NumberPicker extends StatelessWidget {
       selectionOverlay: selectionOverlay,
       label: label,
       labelPadding: labelPadding,
-      alignment: alignment,
+      labelAlignment: labelAlignment,
       onSelectedItemChanged: (int index) =>
           onSelectedItemChanged?.call(min + index * interval),
       itemExtent: itemExtent,

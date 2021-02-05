@@ -25,7 +25,7 @@ class DHPicker extends StatefulWidget {
   final Widget selectionOverlay;
   final Widget label;
   final EdgeInsetsGeometry labelPadding;
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry labelAlignment;
 
   DHPicker({
     Key key,
@@ -39,7 +39,7 @@ class DHPicker extends StatefulWidget {
     this.selectionOverlay = const DefaultSelectionOverlay(),
     this.label,
     this.labelPadding,
-    this.alignment = Alignment.center,
+    this.labelAlignment = Alignment.center,
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
     @required List<Widget> children,
@@ -70,7 +70,7 @@ class DHPicker extends StatefulWidget {
     this.squeeze = kSqueeze,
     this.label,
     this.labelPadding,
-    this.alignment = Alignment.center,
+    this.labelAlignment = Alignment.center,
     @required this.itemExtent,
     @required this.onSelectedItemChanged,
     @required NullableIndexedWidgetBuilder itemBuilder,
@@ -155,7 +155,7 @@ class _DHPickerState extends State<DHPicker> {
       unit = UnitWrap(
         child: widget.label,
         padding: widget.labelPadding,
-        alignment: widget.alignment,
+        alignment: widget.labelAlignment,
       );
     }
 
@@ -212,7 +212,7 @@ class DefaultSelectionOverlay extends StatelessWidget {
   const DefaultSelectionOverlay({
     Key key,
     this.borderColor = DHColors.color_000000_15,
-    this.borderWidth = .0,
+    this.borderWidth = .3,
   })  : assert(borderColor != null),
         assert(borderWidth != null),
         assert(borderWidth >= 0.0),

@@ -7,6 +7,12 @@ class PickerTheme with DiagnosticableTreeMixin {
   /// 背景颜色
   final Color backgroundColor;
 
+  /// 背景装饰
+  final Decoration decoration;
+
+  /// 填充边距
+  final EdgeInsetsGeometry padding;
+
   /// 选择器高度
   final double height;
 
@@ -24,12 +30,14 @@ class PickerTheme with DiagnosticableTreeMixin {
 
   const PickerTheme({
     this.itemStyle = DHStyle.itemStyle,
-    this.backgroundColor = Colors.white,
+    this.backgroundColor,
+    this.decoration,
     this.height = 216.0,
     this.itemExtent = 36.0,
     this.useMagnifier = true,
     this.dividerStyle = DHStyle.dividerStyle,
-  });
+    this.padding,
+  }): assert(backgroundColor == null || decoration == null);
 }
 
 class TitleActionTheme with DiagnosticableTreeMixin {
@@ -45,6 +53,9 @@ class TitleActionTheme with DiagnosticableTreeMixin {
   /// 背景颜色
   final Color backgroundColor;
 
+  /// 背景装饰
+  final Decoration decoration;
+
   /// 标题高度
   final double height;
 
@@ -52,7 +63,8 @@ class TitleActionTheme with DiagnosticableTreeMixin {
     this.cancelStyle = DHStyle.cancelStyle,
     this.doneStyle = DHStyle.doneStyle,
     this.backgroundColor,
+    this.decoration,
     this.height = 44.0,
     this.titleStyle = DHStyle.titleStyle,
-  });
+  }): assert(backgroundColor == null || decoration == null);
 }

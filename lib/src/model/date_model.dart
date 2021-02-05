@@ -83,7 +83,7 @@ class DatePickerModel extends BaseDateTimeModel {
     _weights = weights ?? [1, 1, 1];
     _dividers = dividers ?? ['', ''];
     _labels = labels ?? [true, true, true];
-    _formats = formats ?? [yyyy, MM, dd];
+    _formats = formats ?? [yyyy, mm, dd];
 
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
     this.minTime = minTime ?? DateTime(1970, 1, 1);

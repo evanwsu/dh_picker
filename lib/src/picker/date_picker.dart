@@ -11,7 +11,7 @@ import '../picker_theme.dart';
 typedef String StringAtIndex(int index);
 typedef ParamsBuilder<T> = T Function(int index);
 
-const double _kMagnification = 2.35 / 2.1;
+const double kMagnification = 2.35 / 2.1;
 const double _kSqueeze = 1.25;
 const EdgeInsetsGeometry _kPadding = EdgeInsets.all(16.0);
 const Widget _kOverlay = DefaultSelectionOverlay();
@@ -64,7 +64,7 @@ abstract class BaseDatePickerState extends State<DateTimePicker> {
               squeeze: _kSqueeze,
               onSelectedItemChanged: (index) => onItemChange?.call(index),
               useMagnifier: theme.useMagnifier,
-              magnification: _kMagnification,
+              magnification: kMagnification,
               selectionOverlay: selectionOverlay,
               itemBuilder: (BuildContext context, int index) {
                 final content = stringAtIndex(index);
@@ -151,8 +151,14 @@ class _DatePickerState extends BaseDatePickerState {
     String firstDivider = pickerModel.dividers[0];
     String secondDivider = pickerModel.dividers[1];
 
+    Color backgroundColor = widget.theme.backgroundColor;
+    if(widget.theme.decoration == null){
+      backgroundColor ??= Colors.white;
+     }
     return Container(
-        color: widget.theme.backgroundColor ?? Colors.white,
+        color: backgroundColor,
+        decoration: widget.theme.decoration,
+        padding: widget.theme.padding,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -277,8 +283,14 @@ class _DateTimePickerState extends BaseDatePickerState {
 
     bool hasYear = pickerModel.weights[0] > 0;
 
+    Color backgroundColor = widget.theme.backgroundColor;
+    if(widget.theme.decoration == null){
+      backgroundColor ??= Colors.white;
+    }
     return Container(
-      color: widget.theme.backgroundColor ?? Colors.white,
+      color: backgroundColor,
+      decoration: widget.theme.decoration,
+      padding: widget.theme.padding,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -288,7 +300,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               ValueKey(pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[0],
-              widget.paddingBuilder?.call(0) ?? _kPadding,
+              widget.paddingBuilder?.call(0) ?? const EdgeInsets.only(left: 16, top: 10, right: 10, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(0),
@@ -316,7 +328,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   hasYear ? pickerModel.firstIndex : pickerModel.secondIndex),
               widget.theme,
               pickerModel.weights[1],
-              widget.paddingBuilder?.call(1) ?? _kPadding,
+              widget.paddingBuilder?.call(1) ?? const EdgeInsets.only(left: 10, top: 10, right: 6, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(1),
@@ -343,7 +355,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               ValueKey(pickerModel.secondIndex * 100 + pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[2],
-              widget.paddingBuilder?.call(2) ?? _kPadding,
+              widget.paddingBuilder?.call(2) ?? const EdgeInsets.only(left: 6, top: 10, right: 10, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(2),
@@ -370,7 +382,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[3],
-              widget.paddingBuilder?.call(3) ?? _kPadding,
+              widget.paddingBuilder?.call(3) ?? const EdgeInsets.only(left: 16, right: 0, top: 10, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(3),
@@ -397,7 +409,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[4],
-              widget.paddingBuilder?.call(4) ?? _kPadding,
+              widget.paddingBuilder?.call(4) ?? const EdgeInsets.only(left: 0, top: 10, bottom: 10, right: 16),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(4),
