@@ -98,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     print('取消了');
                   },
                   pickerTheme: PickerTheme(
-                      height: 180.0,
+                    height: 180.0,
                   ),
                   pickerModel: DateTimePickerModel(
                     maxTime: DateTime(2022, 12, 1, 5, 6),
@@ -109,13 +109,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   pickerOverlay: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SizedBox(width: 18,),
-                      Expanded(child: DefaultSelectionOverlay(borderColor: Colors.red,)),
-                      SizedBox(width: 27,),
-                      Expanded(child: DefaultSelectionOverlay(borderColor: Colors.red,)),
-                      SizedBox(width: 27,),
-                      Expanded(child: DefaultSelectionOverlay(borderColor: Colors.red,)),
-                      SizedBox(width: 18,),
+                      SizedBox(
+                        width: 18,
+                      ),
+                      Expanded(
+                          child: DefaultSelectionOverlay(
+                        borderColor: Colors.red,
+                      )),
+                      SizedBox(
+                        width: 27,
+                      ),
+                      Expanded(
+                          child: DefaultSelectionOverlay(
+                        borderColor: Colors.red,
+                      )),
+                      SizedBox(
+                        width: 27,
+                      ),
+                      Expanded(
+                          child: DefaultSelectionOverlay(
+                        borderColor: Colors.red,
+                      )),
+                      SizedBox(
+                        width: 18,
+                      ),
                     ],
                   ),
                   selectionOverlayBuilder: (int index) => null,
