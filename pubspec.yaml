@@ -1,6 +1,6 @@
 name: dh_picker
-description: A new Flutter src.picker package.
-version: 0.0.1
+description: 选择器控件，支持StringPicker, NumberPicker, DateTimePicker.
+version: 0.0.1-nullsafety
 author: evanwo
 homepage: https://github.com/evansherry/dh_picker
 
@@ -11,8 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-#  intl: ^0.17.0-nullsafety.2
-  intl: ^0.16.1
+  intl: ^0.17.0-nullsafety.2
+#  intl: ^0.16.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
