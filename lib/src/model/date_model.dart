@@ -330,9 +330,9 @@ class TimePickerModel extends BaseDateTimeModel {
   DateTime finalTime() {
     return currentTime.isUtc
         ? DateTime.utc(currentTime.year, currentTime.month, currentTime.day,
-            thirdIndex, secondIndex, firstIndex)
+            firstIndex, secondIndex, thirdIndex)
         : DateTime(currentTime.year, currentTime.month, currentTime.day,
-            thirdIndex, secondIndex, firstIndex);
+            firstIndex, secondIndex, thirdIndex);
   }
 }
 
