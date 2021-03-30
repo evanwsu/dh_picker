@@ -1,70 +1,125 @@
 import 'package:intl/intl.dart';
+
 import 'res/strings.dart';
 
 ///
 /// Example:
-///     formatDate(new DateTime(1989), [yyyy]);
+///     formatDate([yyyy], DateTime(1989));
 ///     // => 1989
 const String yyyy = 'yyyy';
 
 /// Outputs year as two digits
 ///
 /// Example:
-///     formatDate(new DateTime(1989), [yy]);
+///     formatDate([yy], DateTime(1989));
 ///     // => 89
 const String yy = 'yy';
 
 /// Outputs month as two digits
 ///
 /// Example:
-///     formatDate(new DateTime(1989, 11), [mm]);
+///     formatDate([MM], DateTime(1989, 11));
 ///     // => 11
-///     formatDate(new DateTime(1989, 5), [mm]);
+///     formatDate([MM], DateTime(1989, 5));
 ///     // => 05
-const String mm = 'mm';
+const String MM = 'MM';
 
 /// Outputs month compactly
 ///
 /// Example:
-///     formatDate(new DateTime(1989, 11), [mm]);
+///     formatDate([M], DateTime(1989, 11));
 ///     // => 11
-///     formatDate(new DateTime(1989, 5), [m]);
+///     formatDate([M], DateTime(1989, 5));
 ///     // => 5
-const String m = 'm';
+const String M = 'M';
 
 /// Outputs month as long name
 ///
 /// Example:
-///     formatDate(new DateTime(1989, 2), [MM]);
+///     formatDate([MMMM], DateTime(1989, 2));
 ///     // => february
-const String MM = 'MM';
+const String MMMM = 'MMMM';
 
 /// Outputs month as short name
 ///
 /// Example:
-///     formatDate(new DateTime(1989, 2), [M]);
+///     formatDate([MMM], DateTime(1989, 2));
 ///     // => feb
-const String M = 'M';
+const String MMM = 'MMM';
 
 /// Outputs day as two digits
 ///
 /// Example:
-///     formatDate(new DateTime(1989, 2, 21), [dd]);
+///     formatDate([dd], DateTime(1989, 2, 21));
 ///     // => 21
-///     formatDate(new DateTime(1989, 2, 5), [dd]);
+///     formatDate([dd], DateTime(1989, 2, 5));
 ///     // => 05
 const String dd = 'dd';
 
 /// Outputs day compactly
 ///
 /// Example:
-///     formatDate(new DateTime(1989, 2, 21), [d]);
+///     formatDate([d], DateTime(1989, 2, 21));
 ///     // => 21
-///     formatDate(new DateTime(1989, 2, 5), [d]);
+///     formatDate([d], DateTime(1989, 2, 5));
 ///     // => 5
 const String d = 'd';
 
-String formatDate(List<String> formats, {int year, int month, int day}) {
+/// Outputs hour as two digits
+///
+/// Example:
+///     formatDate([HH], DateTime(1989, 2, 21, 10));
+///     // => 10
+///     formatDate([HH], DateTime(1989, 2, 5, 6));
+///     // => 06
+const String HH = 'HH';
+
+/// Outputs hour compactly
+///
+/// Example:
+///     formatDate([H], DateTime(1989, 2, 21, 10));
+///     // => 10
+///     formatDate([H], DateTime(1989, 2, 5, 6));
+///     // => 6
+const String H = 'H';
+
+/// Outputs minute as two digits
+///
+/// Example:
+///     formatDate([mm], DateTime(1989, 2, 21, 10, 11));
+///     // => 11
+///     formatDate([mm], DateTime(1989, 2, 5, 6, 1));
+///     // => 01
+const String mm = 'mm';
+
+/// Outputs minute compactly
+///
+/// Example:
+///     formatDate([m], DateTime(1989, 2, 21, 10, 11));
+///     // => 11
+///     formatDate([m], DateTime(1989, 2, 5, 6, 1));
+///     // => 1
+const String m = 'm';
+
+/// Outputs second as two digits
+///
+/// Example:
+///     formatDate([ss], DateTime(1989, 2, 21, 10, 11, 12));
+///     // => 11
+///     formatDate([ss], DateTime(1989, 2, 5, 6, 1, 2));
+///     // => 01
+const String ss = 'ss';
+
+/// Outputs second compactly
+///
+/// Example:
+///     formatDate(new DateTime(1989, 2, 21, 10, 11, 12), [s]);
+///     // => 12
+///     formatDate(new DateTime(1989, 2, 5, 6, 1, 2), [s]);
+///     // => 2
+const String s = 's';
+
+String formatDate(List<String> formats, {int year, int month, int day, int hour, int minute, int second}) {
   final sb = new StringBuffer();
   final language = getLanguage();
 
@@ -73,29 +128,40 @@ String formatDate(List<String> formats, {int year, int month, int day}) {
       sb.write(padZero(year, 4));
     } else if (format == yy) {
       sb.write(padZero(year % 100));
-    } else if (format == mm) {
-      sb.write(padZero(month));
-    } else if (format == m) {
-      sb.write(month);
     } else if (format == MM) {
-      final monthLong =
-      i18nObjInLanguageLookup(language, 'monthLong', month - 1);
-      sb.write(monthLong);
+      sb.write(padZero(month));
     } else if (format == M) {
+      sb.write(month);
+    } else if (format == MMMM) {
+      final monthLong =
+          i18nObjInLanguageLookup(language, 'monthLong', month - 1);
+      sb.write(monthLong);
+    } else if (format == MMM) {
       final monthShort =
-      i18nObjInLanguageLookup(language, 'monthShort', month - 1);
+          i18nObjInLanguageLookup(language, 'monthShort', month - 1);
       sb.write(monthShort);
     } else if (format == dd) {
       sb.write(padZero(day));
     } else if (format == d) {
       sb.write(day);
-    } else if(format.isNotEmpty){
+    } else if (format == HH) {
+      sb.write(padZero(hour));
+    } else if (format == H) {
+      sb.write(hour);
+    } else if (format == mm) {
+      sb.write(padZero(minute));
+    } else if (format == m) {
+      sb.write(minute);
+    } else if (format == ss) {
+      sb.write(padZero(second));
+    } else if (format == s) {
+      sb.write(second);
+    } else if (format?.isNotEmpty == true) {
       sb.write(format);
     }
   }
   return sb.toString();
 }
-
 
 String localeYear() {
   String language = getLanguage();
@@ -130,10 +196,7 @@ String localeDay() {
   }
 }
 
-
-String padZero(int value, [int length = 2]) {
-  return '$value'.padLeft(length, "0");
-}
+String padZero(int value, [int length = 2]) => '$value'.padLeft(length, "0");
 
 /// 本地化国家码
 String getCountry() => Intl.getCurrentLocale().split('_')[1];

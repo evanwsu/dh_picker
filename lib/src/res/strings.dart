@@ -32,6 +32,9 @@ final i18nModel = {
       'December'
     ],
     'day': ['Mon', 'Tue', 'Wed', 'Thur', 'Fri', 'Sat', 'Sun'],
+    'hour': 'h',
+    'minute': 'min',
+    'second': 's'
   },
   // 中文
   'zh': {
@@ -67,6 +70,9 @@ final i18nModel = {
       '十二月'
     ],
     'day': ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
+    'hour': '时',
+    'minute': '分',
+    'second': '秒'
   },
   // 俄语
   'ru': {
@@ -101,6 +107,9 @@ final i18nModel = {
       'Декабрь'
     ],
     'day': ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'],
+    'hour': 'Ч',
+    'minute': 'М',
+    'second': 'с'
   },
   // 法语
   'fr': {
@@ -135,6 +144,9 @@ final i18nModel = {
       'Décembre'
     ],
     'day': ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'],
+    'hour': 'h',
+    'minute': 'm',
+    'second': 's'
   },
   // 西班牙
   'es': {
@@ -169,6 +181,9 @@ final i18nModel = {
       'Diciembre'
     ],
     'day': ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+    'hour': 'h',
+    'minute': 'm',
+    'second': 's'
   },
   // 韩语
   'ko': {
@@ -203,6 +218,9 @@ final i18nModel = {
       '12월'
     ],
     'day': ['월', '화', '수', '목', '금', '토', '일'],
+    'hour': '시',
+    'minute': '분',
+    'second': '초'
   },
   // 日语
   'ja': {
@@ -238,6 +256,9 @@ final i18nModel = {
       '12月'
     ],
     'day': ['月曜日', '火曜日', '水曜日', '木曜日', '金曜日', '土曜日', '日曜日'],
+    'hour': '時間',
+    'minute': '分',
+    'second': '秒'
   },
   // 德语
   'de': {
@@ -273,11 +294,16 @@ final i18nModel = {
       'Dezember'
     ],
     'day': ['Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa', 'So'],
+    'hour': 'h',
+    'minute': 'm',
+    'second': 's'
   }
 };
 
-Map<String, dynamic> i18nObjInLanguage(String language) =>
-    i18nModel[language] ?? i18nModel['en'];
+Map<String, dynamic> i18nObjInLanguage(String language) {
+  if(language == null || language.isEmpty) return i18nModel['en'];
+  return i18nModel[language] ?? i18nModel['en'];
+}
 
 String i18nObjInLanguageLookup(String language, String key, int index){
   final i18n = i18nObjInLanguage(language);
