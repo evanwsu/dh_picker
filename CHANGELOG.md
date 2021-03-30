@@ -1,4 +1,8 @@
-## [0.0.2-nullsafety] - 2020.12.29 
+## [0.0.3] - 2021.3.30 
+
+- fix time range and label 
+
+## [0.0.2-nullsafety] - 2021.2.28 
 
 - fix time picker
 
