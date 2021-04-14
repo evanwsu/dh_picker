@@ -11,27 +11,27 @@ typedef NumIndexFormatter = String Function(num value);
 
 class NumberPicker extends StatelessWidget {
   final double diameterRatio;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final double offAxisFraction;
   final bool useMagnifier;
   final double magnification;
-  final FixedExtentScrollController scrollController;
+  final FixedExtentScrollController? scrollController;
   final double itemExtent;
   final double squeeze;
-  final ValueChanged<num> onSelectedItemChanged;
-  final Widget selectionOverlay;
+  final ValueChanged<num>? onSelectedItemChanged;
+  final Widget? selectionOverlay;
   final bool looping;
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
   final num max;
   final num min;
   final num interval;
-  final NumIndexFormatter indexFormat;
-  final Widget label;
-  final EdgeInsetsGeometry labelPadding;
+  final NumIndexFormatter? indexFormat;
+  final Widget? label;
+  final EdgeInsetsGeometry? labelPadding;
   final AlignmentGeometry labelAlignment;
 
   NumberPicker({
-    Key key,
+    Key? key,
     this.diameterRatio = kDefaultDiameterRatio,
     this.backgroundColor,
     this.offAxisFraction = 0.0,
@@ -41,11 +41,11 @@ class NumberPicker extends StatelessWidget {
     this.squeeze = kSqueeze,
     this.selectionOverlay = const DefaultSelectionOverlay(),
     this.looping = false,
-    @required this.itemExtent,
-    @required this.onSelectedItemChanged,
-    @required this.max,
-    @required this.min,
-    @required this.interval,
+    required this.itemExtent,
+    required this.onSelectedItemChanged,
+    required this.max,
+    required this.min,
+    required this.interval,
     this.indexFormat,
     this.textStyle,
     this.label,

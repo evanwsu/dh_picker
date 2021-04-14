@@ -1,4 +1,4 @@
-import 'package:dh_picker/src/res/colors.dart';
+import '../res/colors.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -13,22 +13,22 @@ const double kOverAndUnderCenterOpacity = 0.447;
 
 class DHPicker extends StatefulWidget {
   final double diameterRatio;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final double offAxisFraction;
   final bool useMagnifier;
   final double magnification;
-  final FixedExtentScrollController scrollController;
+  final FixedExtentScrollController? scrollController;
   final double itemExtent;
   final double squeeze;
-  final ValueChanged<int> onSelectedItemChanged;
+  final ValueChanged<int>? onSelectedItemChanged;
   final ListWheelChildDelegate childDelegate;
-  final Widget selectionOverlay;
-  final Widget label;
-  final EdgeInsetsGeometry labelPadding;
+  final Widget? selectionOverlay;
+  final Widget? label;
+  final EdgeInsetsGeometry? labelPadding;
   final AlignmentGeometry labelAlignment;
 
   DHPicker({
-    Key key,
+    Key? key,
     this.diameterRatio = kDefaultDiameterRatio,
     this.backgroundColor,
     this.offAxisFraction = 0.0,
@@ -40,9 +40,9 @@ class DHPicker extends StatefulWidget {
     this.label,
     this.labelPadding,
     this.labelAlignment = Alignment.center,
-    @required this.itemExtent,
-    @required this.onSelectedItemChanged,
-    @required List<Widget> children,
+    required this.itemExtent,
+    required this.onSelectedItemChanged,
+    required List<Widget> children,
     bool looping = false,
   })  : assert(children != null),
         assert(diameterRatio != null),
@@ -58,9 +58,8 @@ class DHPicker extends StatefulWidget {
             : ListWheelChildListDelegate(children: children),
         super(key: key);
 
-
   DHPicker.builder({
-    Key key,
+    Key? key,
     this.diameterRatio = kDefaultDiameterRatio,
     this.backgroundColor,
     this.offAxisFraction = 0.0,
@@ -71,10 +70,10 @@ class DHPicker extends StatefulWidget {
     this.label,
     this.labelPadding,
     this.labelAlignment = Alignment.center,
-    @required this.itemExtent,
-    @required this.onSelectedItemChanged,
-    @required NullableIndexedWidgetBuilder itemBuilder,
-    int childCount,
+    required this.itemExtent,
+    required this.onSelectedItemChanged,
+    required NullableIndexedWidgetBuilder itemBuilder,
+    int? childCount,
     this.selectionOverlay = const DefaultSelectionOverlay(),
   })  : assert(itemBuilder != null),
         assert(diameterRatio != null),
@@ -94,7 +93,7 @@ class DHPicker extends StatefulWidget {
 }
 
 class _DHPickerState extends State<DHPicker> {
-  FixedExtentScrollController _controller;
+  FixedExtentScrollController? _controller;
 
   @override
   void initState() {
@@ -139,7 +138,7 @@ class _DHPickerState extends State<DHPicker> {
             itemExtent: widget.itemExtent,
             squeeze: widget.squeeze,
             onSelectedItemChanged: (int index) =>
-                widget?.onSelectedItemChanged(index),
+                widget.onSelectedItemChanged?.call(index),
             childDelegate: widget.childDelegate,
           ),
         ),
@@ -148,12 +147,12 @@ class _DHPickerState extends State<DHPicker> {
     );
   }
 
-  Widget _buildSelectionOverlay(Widget selectionOverlay) {
+  Widget _buildSelectionOverlay(Widget? selectionOverlay) {
     final double height = widget.itemExtent * widget.magnification;
-    Widget unit;
+    Widget? unit;
     if (widget.label != null) {
       unit = UnitWrap(
-        child: widget.label,
+        child: widget.label!,
         padding: widget.labelPadding,
         alignment: widget.labelAlignment,
       );
@@ -181,13 +180,14 @@ class _DHPickerState extends State<DHPicker> {
 /// 单位控件
 class UnitWrap extends StatelessWidget {
   final Widget child;
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
   final AlignmentGeometry alignment;
 
-  UnitWrap({Key key,
-    @required this.child,
+  UnitWrap({
+    Key? key,
+    required this.child,
     this.padding,
-    this.alignment,
+    this.alignment = Alignment.center,
   }) : super(key: key);
 
   @override
@@ -195,7 +195,7 @@ class UnitWrap extends StatelessWidget {
     Widget child = this.child;
     if (padding != null)
       child = Padding(
-        padding: padding,
+        padding: padding!,
         child: child,
       );
     return Align(
@@ -210,7 +210,7 @@ class DefaultSelectionOverlay extends StatelessWidget {
   final double borderWidth;
 
   const DefaultSelectionOverlay({
-    Key key,
+    Key? key,
     this.borderColor = DHColors.color_000000_15,
     this.borderWidth = .3,
   })  : assert(borderColor != null),

@@ -1,44 +1,42 @@
 import 'dart:core';
 
-import 'package:dh_picker/src/res/strings.dart';
-
-import '../../src/date_util.dart';
-import '../date_format.dart';
+import '../res/strings.dart';
 import '../date_util.dart';
+import '../date_format.dart';
 
 abstract class BaseDateTimeModel {
   /// 第一列数据源
-  List<String> firstList;
+  late List<String> firstList;
 
   /// 第二列数据源
-  List<String> secondList;
+  late List<String> secondList;
 
   /// 第三列数据源
-  List<String> thirdList;
+  late List<String> thirdList;
 
   /// 第一列索引
-  int firstIndex;
+  late int firstIndex;
 
   /// 第二列索引
-  int secondIndex;
+  late int secondIndex;
 
   /// 第三列索引
-  int thirdIndex;
+  late int thirdIndex;
 
   /// 当前选中时间
-  DateTime currentTime;
+  late DateTime currentTime;
 
   /// 最终时间
   DateTime finalTime() => currentTime;
 
   /// 第一列选中字符串
-  String firstStringAtIndex(int index);
+  String? firstStringAtIndex(int index);
 
   /// 第二列选中字符串
-  String secondStringAtIndex(int index);
+  String? secondStringAtIndex(int index);
 
   /// 第三列选中字符串
-  String thirdStringAtIndex(int index);
+  String? thirdStringAtIndex(int index);
 
   /// 更新第一列索引
   void updateFirstIndex(int index) => firstIndex = index;
@@ -49,9 +47,9 @@ abstract class BaseDateTimeModel {
   /// 更新第三列索引
   void updateThirdIndex(int index) => thirdIndex = index;
 
-  List<String> _dividers;
+  late List<String> _dividers;
 
-  List<int> _weights;
+  late List<int> _weights;
 
   /// 分割线
   List<String> get dividers => _dividers;
@@ -60,24 +58,24 @@ abstract class BaseDateTimeModel {
   List<int> get weights => _weights;
 
   /// 年月日标签
-  List<bool> _labels;
+  late List<bool> _labels;
 
-  List<String> _formats;
+  late List<String> _formats;
 }
 
 /// 日期(年月日)选择器
 class DatePickerModel extends BaseDateTimeModel {
-  DateTime maxTime;
-  DateTime minTime;
+  late DateTime maxTime;
+  late DateTime minTime;
 
   DatePickerModel({
-    DateTime currentTime,
-    DateTime maxTime,
-    DateTime minTime,
-    List<String> formats,
-    List<bool> labels,
-    List<int> weights,
-    List<String> dividers,
+    DateTime? currentTime,
+    DateTime? maxTime,
+    DateTime? minTime,
+    List<String>? formats,
+    List<bool>? labels,
+    List<int>? weights,
+    List<String>? dividers,
   })  : assert(weights == null || weights.length == 3),
         assert(dividers == null || dividers.length == 2),
         assert(formats == null || formats.length == 3),
@@ -85,7 +83,7 @@ class DatePickerModel extends BaseDateTimeModel {
     _weights = weights ?? [1, 1, 1];
     _dividers = dividers ?? ['', ''];
     _labels = labels ?? [true, true, true];
-    _formats = formats ?? [yyyy, mm, dd];
+    _formats = formats ?? [yyyy, MM, dd];
 
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
     this.minTime = minTime ?? DateTime(1970, 1, 1);
@@ -228,20 +226,20 @@ class DatePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String firstStringAtIndex(int index) {
+  String? firstStringAtIndex(int index) {
     // 防止数组越界异常
     if (index >= 0 && index < firstList.length) return firstList[index];
     return null;
   }
 
   @override
-  String secondStringAtIndex(int index) {
+  String? secondStringAtIndex(int index) {
     if (index >= 0 && index < secondList.length) return secondList[index];
     return null;
   }
 
   @override
-  String thirdStringAtIndex(int index) {
+  String? thirdStringAtIndex(int index) {
     if (index >= 0 && index < thirdList.length) return thirdList[index];
     return null;
   }
@@ -286,17 +284,16 @@ class TimePickerModel extends BaseDateTimeModel {
   bool showSeconds;
 
   TimePickerModel({
-    DateTime currentTime,
+    DateTime? currentTime,
     this.showSeconds: false,
-    List<String> formats,
-    List<bool> labels,
-    List<int> weights,
-    List<String> dividers,
+    List<String>? formats,
+    List<bool>? labels,
+    List<int>? weights,
+    List<String>? dividers,
   })  : assert(weights == null || weights.length == 3),
         assert(dividers == null || dividers.length == 2),
         assert(labels == null || labels.length == 3),
-        assert(formats == null || formats.length == 3),
-        assert(showSeconds != null) {
+        assert(formats == null || formats.length == 3){
     _weights = weights ?? [1, 1, showSeconds ? 1 : 0];
     _dividers = dividers ?? [':', showSeconds ? ':' : ''];
     _formats = formats ?? [HH, mm, ss];
@@ -339,7 +336,7 @@ class TimePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String firstStringAtIndex(int index) {
+  String? firstStringAtIndex(int index) {
     if (index >= 0 && index < firstList.length) {
       return firstList[index];
     } else {
@@ -348,7 +345,7 @@ class TimePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String secondStringAtIndex(int index) {
+  String? secondStringAtIndex(int index) {
     if (index >= 0 && index < secondList.length) {
       return secondList[index];
     } else {
@@ -357,7 +354,7 @@ class TimePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String thirdStringAtIndex(int index) {
+  String? thirdStringAtIndex(int index) {
     if (index >= 0 && index < thirdList.length) {
       return thirdList[index];
     } else {
@@ -381,25 +378,24 @@ class TimeRangePickerModel extends BaseDateTimeModel {
   bool showSeconds;
 
   /// 最大时间范围
-  DateTime maxTime;
+  late DateTime maxTime;
 
   /// 最小时间范围
-  DateTime minTime;
+  late DateTime minTime;
 
   TimeRangePickerModel({
-    DateTime currentTime,
-    DateTime maxTime,
-    DateTime minTime,
+    DateTime? currentTime,
+    DateTime? maxTime,
+    DateTime? minTime,
     this.showSeconds: false,
-    List<String> formats,
-    List<bool> labels,
-    List<int> weights,
-    List<String> dividers,
+    List<String>? formats,
+    List<bool>? labels,
+    List<int>? weights,
+    List<String>? dividers,
   })  : assert(weights == null || weights.length == 3),
         assert(dividers == null || dividers.length == 2),
         assert(labels == null || labels.length == 3),
-        assert(formats == null || formats.length == 3),
-        assert(showSeconds != null) {
+        assert(formats == null || formats.length == 3){
     _weights = weights ?? [1, 1, showSeconds ? 1 : 0];
     _dividers = dividers ?? [':', showSeconds ? ':' : ''];
     _formats = formats ?? [HH, mm, ss];
@@ -501,7 +497,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String firstStringAtIndex(int index) {
+  String? firstStringAtIndex(int index) {
     if (index >= 0 && index < firstList.length) {
       return firstList[index];
     } else {
@@ -510,7 +506,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String secondStringAtIndex(int index) {
+  String? secondStringAtIndex(int index) {
     if (index >= 0 && index < secondList.length) {
       return secondList[index];
     } else {
@@ -519,7 +515,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
   }
 
   @override
-  String thirdStringAtIndex(int index) {
+  String? thirdStringAtIndex(int index) {
     if (index >= 0 && index < thirdList.length) {
       return thirdList[index];
     } else {
@@ -601,10 +597,10 @@ class TimeRangePickerModel extends BaseDateTimeModel {
 /// [年月日 时:分]
 class DateTimePickerModel extends DatePickerModel {
   final bool showYears;
-  DateTime maxTime;
-  DateTime minTime;
-  int fourthIndex;
-  int fifthIndex;
+  late DateTime maxTime;
+  late DateTime minTime;
+  late int fourthIndex;
+  late int fifthIndex;
 
   /// [currentTime]选择时间
   /// [maxTime] 最大时间
@@ -615,14 +611,14 @@ class DateTimePickerModel extends DatePickerModel {
   /// [weights] 选择器权重
   /// [dividers] 选择器间隔符
   DateTimePickerModel({
-    DateTime currentTime,
-    DateTime maxTime,
-    DateTime minTime,
+    DateTime? currentTime,
+    DateTime? maxTime,
+    DateTime? minTime,
     this.showYears = true,
-    List<String> formats,
-    List<bool> labels,
-    List<int> weights,
-    List<String> dividers,
+    List<String>? formats,
+    List<bool>? labels,
+    List<int>? weights,
+    List<String>? dividers,
   })  : assert(weights == null || weights.length == 5),
         assert(dividers == null || dividers.length == 4),
         super(
@@ -642,7 +638,7 @@ class DateTimePickerModel extends DatePickerModel {
     fifthIndex = this.currentTime.minute - minMinute;
   }
 
-  String fourthStringAtIndex(int index) {
+  String? fourthStringAtIndex(int index) {
     int max = _maxHourOfCurrentDay();
     int min = _minHourOfCurrentDay();
 
@@ -652,7 +648,7 @@ class DateTimePickerModel extends DatePickerModel {
     return null;
   }
 
-  String fifthStringAtIndex(int index) {
+  String? fifthStringAtIndex(int index) {
     int max = _maxMinuteOfCurrentHour();
     int min = _minMinuteOfCurrentHour();
 
@@ -815,7 +811,7 @@ class DateTimePickerModel extends DatePickerModel {
           );
   }
 
-  bool isAtSameDay(DateTime day1, DateTime day2) {
+  bool isAtSameDay(DateTime? day1, DateTime? day2) {
     return day1 != null &&
         day2 != null &&
         day1.difference(day2).inDays == 0 &&

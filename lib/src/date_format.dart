@@ -119,42 +119,57 @@ const String ss = 'ss';
 ///     // => 2
 const String s = 's';
 
-String formatDate(List<String> formats, {int year, int month, int day, int hour, int minute, int second}) {
+String formatDate(List<String?> formats,
+    {int? year, int? month, int? day, int? hour, int? minute, int? second}) {
   final sb = new StringBuffer();
   final language = getLanguage();
 
-  for (String format in formats) {
+  for (String? format in formats) {
     if (format == yyyy) {
-      sb.write(padZero(year, 4));
+      assert(year != null, 'Formatted year, no value set');
+      sb.write(padZero(year!, 4));
     } else if (format == yy) {
-      sb.write(padZero(year % 100));
+      assert(year != null, 'Formatted year, no value set');
+      sb.write(padZero(year! % 100));
     } else if (format == MM) {
-      sb.write(padZero(month));
+      assert(month != null, 'Formatted month, no value set');
+      sb.write(padZero(month!));
     } else if (format == M) {
+      assert(month != null, 'Formatted month, no value set');
       sb.write(month);
     } else if (format == MMMM) {
+      assert(month != null, 'Formatted month, no value set');
       final monthLong =
-          i18nObjInLanguageLookup(language, 'monthLong', month - 1);
+          i18nObjInLanguageLookup(language, 'monthLong', month! - 1);
       sb.write(monthLong);
     } else if (format == MMM) {
+      assert(month != null, 'Formatted month, no value set');
       final monthShort =
-          i18nObjInLanguageLookup(language, 'monthShort', month - 1);
+          i18nObjInLanguageLookup(language, 'monthShort', month! - 1);
       sb.write(monthShort);
     } else if (format == dd) {
-      sb.write(padZero(day));
+      assert(day != null, 'Formatted day, no value set');
+      sb.write(padZero(day!));
     } else if (format == d) {
+      assert(day != null, 'Formatted day, no value set');
       sb.write(day);
     } else if (format == HH) {
-      sb.write(padZero(hour));
+      assert(hour != null, 'Formatted hour, no value set');
+      sb.write(padZero(hour!));
     } else if (format == H) {
+      assert(hour != null, 'Formatted hour, no value set');
       sb.write(hour);
     } else if (format == mm) {
-      sb.write(padZero(minute));
+      assert(minute != null, 'Formatted minute, no value set');
+      sb.write(padZero(minute!));
     } else if (format == m) {
+      assert(minute != null, 'Formatted minute, no value set');
       sb.write(minute);
     } else if (format == ss) {
-      sb.write(padZero(second));
+      assert(second != null, 'Formatted second, no value set');
+      sb.write(padZero(second!));
     } else if (format == s) {
+      assert(second != null, 'Formatted second, no value set');
       sb.write(second);
     } else if (format?.isNotEmpty == true) {
       sb.write(format);

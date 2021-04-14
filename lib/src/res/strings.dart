@@ -300,9 +300,9 @@ final i18nModel = {
   }
 };
 
-Map<String, dynamic> i18nObjInLanguage(String language) {
-  if(language == null || language.isEmpty) return i18nModel['en'];
-  return i18nModel[language] ?? i18nModel['en'];
+Map<String, dynamic> i18nObjInLanguage(String? language) {
+  if(language == null || language.isEmpty) return i18nModel['en']!;
+  return i18nModel[language] ?? i18nModel['en']!;
 }
 
 String i18nObjInLanguageLookup(String language, String key, int index){

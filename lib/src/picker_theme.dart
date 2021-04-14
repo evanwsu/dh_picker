@@ -5,13 +5,13 @@ import 'res/styles.dart';
 
 class PickerTheme with DiagnosticableTreeMixin {
   /// 背景颜色
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// 背景装饰
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// 填充边距
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   /// 选择器高度
   final double height;
@@ -42,22 +42,22 @@ class PickerTheme with DiagnosticableTreeMixin {
 
 class TitleActionTheme with DiagnosticableTreeMixin {
   /// 左上角取消文本样式
-  final TextStyle cancelStyle;
+  final TextStyle? cancelStyle;
 
   /// 右上角完成文本样式
-  final TextStyle doneStyle;
+  final TextStyle? doneStyle;
 
   /// 标题样式
-  final TextStyle titleStyle;
+  final TextStyle? titleStyle;
 
   /// 背景颜色
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// 背景装饰
-  final Decoration decoration;
+  final Decoration? decoration;
 
   /// 标题高度
-  final double height;
+  final double? height;
 
   const TitleActionTheme({
     this.cancelStyle = DHStyle.cancelStyle,

@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+
 import 'picker.dart';
 
 ///@author Evan
@@ -8,24 +9,24 @@ import 'picker.dart';
 
 class StringPicker extends StatelessWidget {
   final double diameterRatio;
-  final Color backgroundColor;
+  final Color? backgroundColor;
   final double offAxisFraction;
   final bool useMagnifier;
   final double magnification;
-  final FixedExtentScrollController scrollController;
+  final FixedExtentScrollController? scrollController;
   final double itemExtent;
   final double squeeze;
-  final ValueChanged<String> onSelectedItemChanged;
-  final Widget selectionOverlay;
+  final ValueChanged<String>? onSelectedItemChanged;
+  final Widget? selectionOverlay;
   final bool looping;
-  final TextStyle itemStyle;
+  final TextStyle? itemStyle;
   final List<String> data;
-  final Widget label;
-  final EdgeInsetsGeometry labelPadding;
+  final Widget? label;
+  final EdgeInsetsGeometry? labelPadding;
   final AlignmentGeometry labelAlignment;
 
   StringPicker({
-    Key key,
+    Key? key,
     this.diameterRatio = kDefaultDiameterRatio,
     this.backgroundColor,
     this.offAxisFraction = 0.0,
@@ -35,9 +36,9 @@ class StringPicker extends StatelessWidget {
     this.squeeze = kSqueeze,
     this.selectionOverlay = const DefaultSelectionOverlay(),
     this.looping = false,
-    @required this.itemExtent,
-    @required this.onSelectedItemChanged,
-    @required this.data,
+    required this.itemExtent,
+    required this.onSelectedItemChanged,
+    required this.data,
     this.itemStyle,
     this.label,
     this.labelPadding,

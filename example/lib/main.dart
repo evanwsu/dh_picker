@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: EdgeInsets.symmetric(horizontal: 20),
             ),
           ),
-          FlatButton(
+          TextButton(
             onPressed: () {
               showPicker(context, builder: (BuildContext context) {
                 return DateTimePickerWidget(

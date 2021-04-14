@@ -13,22 +13,22 @@ class DateTimePickerWidget extends StatelessWidget {
   final bool showTitleActions;
 
   /// TitleAction主题
-  final TitleActionTheme titleActionTheme;
+  final TitleActionTheme? titleActionTheme;
 
   /// 确认事件
-  final ValueChanged<DateTime> onConfirm;
+  final ValueChanged<DateTime>? onConfirm;
 
   /// 取消事件
-  final GestureTapCallback onCancel;
+  final GestureTapCallback? onCancel;
 
   /// 取消文本
-  final String cancel;
+  final String? cancel;
 
   /// 确认文本
-  final String confirm;
+  final String? confirm;
 
   /// 标题文本
-  final String title;
+  final String? title;
 
   /// 选择器主题
   final PickerTheme pickerTheme;
@@ -37,25 +37,25 @@ class DateTimePickerWidget extends StatelessWidget {
   final BaseDateTimeModel pickerModel;
 
   /// 日期变化回调
-  final ValueChanged<DateTime> onDateTimeChanged;
+  final ValueChanged<DateTime>? onDateTimeChanged;
 
   /// 选择器填充
-  final ParamsBuilder<EdgeInsetsGeometry> paddingBuilder;
+  final ParamsBuilder<EdgeInsetsGeometry>? paddingBuilder;
 
   /// 选择器选中区域覆盖控件
-  final ParamsBuilder<Widget> selectionOverlayBuilder;
+  final ParamsBuilder<Widget>? selectionOverlayBuilder;
 
   /// header控件在 titleAction下选择器上
-  final Widget header;
+  final Widget? header;
 
   /// footer控件在picker下
-  final Widget footer;
+  final Widget? footer;
 
   /// picker 区域覆盖控件通常用于自定义
-  final Widget pickerOverlay;
+  final Widget? pickerOverlay;
 
   DateTimePickerWidget({
-    Key key,
+    Key? key,
     this.showTitleActions = true,
     this.titleActionTheme,
     this.onConfirm,
@@ -63,8 +63,8 @@ class DateTimePickerWidget extends StatelessWidget {
     this.cancel,
     this.confirm,
     this.title,
-    this.pickerTheme,
-    @required this.pickerModel,
+    required this.pickerTheme,
+    required this.pickerModel,
     this.onDateTimeChanged,
     this.paddingBuilder,
     this.selectionOverlayBuilder,
@@ -121,36 +121,34 @@ class DateTimePickerWidget extends StatelessWidget {
               onCancel?.call();
             },
           ),
-        if (header != null) header,
+        if (header != null) header!,
         picker,
-        if (footer != null) footer,
+        if (footer != null) footer!,
       ],
     );
   }
 }
 
-
-
 /// 选择器标题和按钮
 class TitleActions extends StatelessWidget {
   /// 标题样式
   final TitleActionTheme theme;
-  final GestureTapCallback onConfirm;
+  final GestureTapCallback? onConfirm;
 
-  final GestureTapCallback onCancel;
+  final GestureTapCallback? onCancel;
 
   /// 取消文本
-  final String cancel;
+  final String? cancel;
 
   /// 确认文本
-  final String confirm;
+  final String? confirm;
 
   /// 标题文本
-  final String title;
+  final String? title;
 
   TitleActions({
-    Key key,
-    TitleActionTheme theme,
+    Key? key,
+    TitleActionTheme? theme,
     this.onConfirm,
     this.onCancel,
     this.cancel,
@@ -165,7 +163,7 @@ class TitleActions extends StatelessWidget {
     String confirm = this.confirm ?? i18nObjInLanguage(language)['done'];
     String cancel = this.cancel ?? i18nObjInLanguage(language)['cancel'];
 
-    Color backgroundColor = theme.backgroundColor;
+    Color? backgroundColor = theme.backgroundColor;
     if (theme.decoration == null) {
       backgroundColor ??= Colors.white;
     }

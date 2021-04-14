@@ -1,6 +1,7 @@
-import 'package:dh_picker/dh_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import '../model/date_model.dart';
 import '../picker/picker.dart';
 import '../picker_theme.dart';
 
@@ -8,8 +9,8 @@ import '../picker_theme.dart';
 ///@since 2021/1/6
 ///@describe:
 
-typedef String StringAtIndex(int index);
-typedef ParamsBuilder<T> = T Function(int index);
+typedef String? StringAtIndex(int index);
+typedef ParamsBuilder<T> = T? Function(int index);
 
 const double kMagnification = 2.35 / 2.1;
 const double _kSqueeze = 1.25;
@@ -33,12 +34,12 @@ abstract class BaseDatePickerState extends State<DateTimePicker> {
     ValueKey key,
     PickerTheme theme,
     int weight,
-    EdgeInsetsGeometry padding,
-    Widget selectionOverlay,
-    ScrollController scrollController,
+    EdgeInsetsGeometry? padding,
+    Widget? selectionOverlay,
+    FixedExtentScrollController? scrollController,
     StringAtIndex stringAtIndex,
-    ValueChanged<int> onItemChange,
-    ValueChanged<int> onScrollEnd,
+    ValueChanged<int>? onItemChange,
+    ValueChanged<int>? onScrollEnd,
   ) {
     return Expanded(
       flex: weight,
@@ -51,7 +52,8 @@ abstract class BaseDatePickerState extends State<DateTimePicker> {
                 onScrollEnd != null &&
                 notification is ScrollEndNotification &&
                 notification.metrics is FixedExtentMetrics) {
-              final FixedExtentMetrics metrics = notification.metrics;
+              final FixedExtentMetrics metrics =
+                  notification.metrics as FixedExtentMetrics;
               final int index = metrics.itemIndex;
               onScrollEnd(index);
             }
@@ -96,19 +98,18 @@ abstract class BaseDatePickerState extends State<DateTimePicker> {
 class DateTimePicker extends StatefulWidget {
   final PickerTheme theme;
   final BaseDateTimeModel pickerModel;
-  final ValueChanged<DateTime> onDateTimeChanged;
-  final ParamsBuilder<EdgeInsetsGeometry> paddingBuilder;
-  final ParamsBuilder<Widget> selectionOverlayBuilder;
+  final ValueChanged<DateTime>? onDateTimeChanged;
+  final ParamsBuilder<EdgeInsetsGeometry>? paddingBuilder;
+  final ParamsBuilder<Widget>? selectionOverlayBuilder;
 
   DateTimePicker({
-    Key key,
-    PickerTheme theme,
-    this.pickerModel,
+    Key? key,
+    required this.pickerModel,
+    this.theme = const PickerTheme(),
     this.onDateTimeChanged,
     this.paddingBuilder,
     this.selectionOverlayBuilder,
-  }) : this.theme = theme ?? const PickerTheme(),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   State createState() {
@@ -122,9 +123,9 @@ class DateTimePicker extends StatefulWidget {
 
 /// 日期选择
 class _DatePickerState extends BaseDatePickerState {
-  FixedExtentScrollController firstController;
-  FixedExtentScrollController secondController;
-  FixedExtentScrollController thirdController;
+  late FixedExtentScrollController firstController;
+  late FixedExtentScrollController secondController;
+  late FixedExtentScrollController thirdController;
 
   @override
   void initScrollControl() {
@@ -148,13 +149,14 @@ class _DatePickerState extends BaseDatePickerState {
   @override
   Widget build(BuildContext context) {
     BaseDateTimeModel pickerModel = widget.pickerModel;
-    String firstDivider = pickerModel.dividers[0];
-    String secondDivider = pickerModel.dividers[1];
+    String? firstDivider, secondDivider;
+    firstDivider = pickerModel.dividers[0];
+    secondDivider = pickerModel.dividers[1];
 
-    Color backgroundColor = widget.theme.backgroundColor;
-    if(widget.theme.decoration == null){
+    Color? backgroundColor = widget.theme.backgroundColor;
+    if (widget.theme.decoration == null) {
       backgroundColor ??= Colors.white;
-     }
+    }
     return Container(
         color: backgroundColor,
         decoration: widget.theme.decoration,
@@ -183,7 +185,7 @@ class _DatePickerState extends BaseDatePickerState {
                 },
               ),
 
-            if (firstDivider != null && firstDivider.isNotEmpty)
+            if (firstDivider.isNotEmpty)
               Text(
                 firstDivider,
                 style: widget.theme.dividerStyle,
@@ -210,7 +212,7 @@ class _DatePickerState extends BaseDatePickerState {
                 },
               ),
 
-            if (secondDivider != null && secondDivider.isNotEmpty)
+            if (secondDivider.isNotEmpty)
               Text(
                 secondDivider,
                 style: widget.theme.dividerStyle,
@@ -242,15 +244,15 @@ class _DatePickerState extends BaseDatePickerState {
 
 /// 年月日 时分时间选择器
 class _DateTimePickerState extends BaseDatePickerState {
-  FixedExtentScrollController firstController;
-  FixedExtentScrollController secondController;
-  FixedExtentScrollController thirdController;
-  FixedExtentScrollController fourthController;
-  FixedExtentScrollController fifthController;
+  late FixedExtentScrollController firstController;
+  late FixedExtentScrollController secondController;
+  late FixedExtentScrollController thirdController;
+  late FixedExtentScrollController fourthController;
+  late FixedExtentScrollController fifthController;
 
   @override
   void initScrollControl() {
-    DateTimePickerModel model = widget.pickerModel;
+    DateTimePickerModel model = widget.pickerModel as DateTimePickerModel;
 
     firstController =
         FixedExtentScrollController(initialItem: model.firstIndex);
@@ -275,7 +277,7 @@ class _DateTimePickerState extends BaseDatePickerState {
 
   @override
   Widget build(BuildContext context) {
-    DateTimePickerModel pickerModel = widget.pickerModel;
+    DateTimePickerModel pickerModel = widget.pickerModel as DateTimePickerModel;
     String firstDivider = pickerModel.dividers[0];
     String secondDivider = pickerModel.dividers[1];
     String thirdDivider = pickerModel.dividers[2];
@@ -283,8 +285,8 @@ class _DateTimePickerState extends BaseDatePickerState {
 
     bool hasYear = pickerModel.weights[0] > 0;
 
-    Color backgroundColor = widget.theme.backgroundColor;
-    if(widget.theme.decoration == null){
+    Color? backgroundColor = widget.theme.backgroundColor;
+    if (widget.theme.decoration == null) {
       backgroundColor ??= Colors.white;
     }
     return Container(
@@ -300,7 +302,9 @@ class _DateTimePickerState extends BaseDatePickerState {
               ValueKey(pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[0],
-              widget.paddingBuilder?.call(0) ?? const EdgeInsets.only(left: 16, top: 10, right: 10, bottom: 10),
+              widget.paddingBuilder?.call(0) ??
+                  const EdgeInsets.only(
+                      left: 16, top: 10, right: 10, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(0),
@@ -315,7 +319,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               },
             ),
 
-          if (hasYear && firstDivider != null && firstDivider.isNotEmpty)
+          if (hasYear && firstDivider.isNotEmpty)
             Text(
               firstDivider,
               style: widget.theme.dividerStyle,
@@ -328,7 +332,9 @@ class _DateTimePickerState extends BaseDatePickerState {
                   hasYear ? pickerModel.firstIndex : pickerModel.secondIndex),
               widget.theme,
               pickerModel.weights[1],
-              widget.paddingBuilder?.call(1) ?? const EdgeInsets.only(left: 10, top: 10, right: 6, bottom: 10),
+              widget.paddingBuilder?.call(1) ??
+                  const EdgeInsets.only(
+                      left: 10, top: 10, right: 6, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(1),
@@ -343,7 +349,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               },
             ),
 
-          if (secondDivider != null && secondDivider.isNotEmpty)
+          if (secondDivider.isNotEmpty)
             Text(
               secondDivider,
               style: widget.theme.dividerStyle,
@@ -355,7 +361,9 @@ class _DateTimePickerState extends BaseDatePickerState {
               ValueKey(pickerModel.secondIndex * 100 + pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[2],
-              widget.paddingBuilder?.call(2) ?? const EdgeInsets.only(left: 6, top: 10, right: 10, bottom: 10),
+              widget.paddingBuilder?.call(2) ??
+                  const EdgeInsets.only(
+                      left: 6, top: 10, right: 10, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(2),
@@ -368,7 +376,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               },
             ),
 
-          if (thirdDivider != null && thirdDivider.isNotEmpty)
+          if (thirdDivider.isNotEmpty)
             Text(
               thirdDivider,
               style: widget.theme.dividerStyle,
@@ -382,7 +390,9 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[3],
-              widget.paddingBuilder?.call(3) ?? const EdgeInsets.only(left: 16, right: 0, top: 10, bottom: 10),
+              widget.paddingBuilder?.call(3) ??
+                  const EdgeInsets.only(
+                      left: 16, right: 0, top: 10, bottom: 10),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(3),
@@ -395,7 +405,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               },
             ),
 
-          if (fourthDivider != null && fourthDivider.isNotEmpty)
+          if (fourthDivider.isNotEmpty)
             Text(
               fourthDivider,
               style: widget.theme.dividerStyle,
@@ -409,7 +419,9 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[4],
-              widget.paddingBuilder?.call(4) ?? const EdgeInsets.only(left: 0, top: 10, bottom: 10, right: 16),
+              widget.paddingBuilder?.call(4) ??
+                  const EdgeInsets.only(
+                      left: 0, top: 10, bottom: 10, right: 16),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(4),
