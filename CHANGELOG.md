@@ -1,3 +1,7 @@
+## [0.0.4] - 2021.4.15 
+
+- null safety
+
 ## [0.0.3] - 2021.3.30 
 
 - fix time range and label 
