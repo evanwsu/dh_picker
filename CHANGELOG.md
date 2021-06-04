@@ -1,3 +1,7 @@
+## [0.0.5] - 2021.6.3
+ 
+- fix showPicker null
+
 ## [0.0.4] - 2021.4.15 
 
 - null safety

@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 /// 默认选择器高度
 const _kPickerHeight = 260;
 
-Future<DateTime> showPicker(
+Future<DateTime?> showPicker(
   BuildContext context, {
   required WidgetBuilder builder,
   bool barrierDismissible = true,
