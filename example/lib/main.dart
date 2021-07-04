@@ -101,8 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     height: 180.0,
                   ),
                   pickerModel: DateTimePickerModel(
-                    maxTime: DateTime(2022, 12, 1, 5, 6),
-                    minTime: DateTime(2020, 11, 2, 3, 4),
+                    maxTime: DateTime(2022, 12, 1, 5, 6, 7),
+                    minTime: DateTime(2020, 11, 2, 3, 4, 5),
                     currentTime: selectTime,
                     // dividers: ['', '/', '', ':'],
                   ),

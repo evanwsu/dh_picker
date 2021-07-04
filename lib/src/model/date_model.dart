@@ -293,7 +293,7 @@ class TimePickerModel extends BaseDateTimeModel {
   })  : assert(weights == null || weights.length == 3),
         assert(dividers == null || dividers.length == 2),
         assert(labels == null || labels.length == 3),
-        assert(formats == null || formats.length == 3){
+        assert(formats == null || formats.length == 3) {
     _weights = weights ?? [1, 1, showSeconds ? 1 : 0];
     _dividers = dividers ?? [':', showSeconds ? ':' : ''];
     _formats = formats ?? [HH, mm, ss];
@@ -321,8 +321,7 @@ class TimePickerModel extends BaseDateTimeModel {
   void _fillMinuteList() {
     String label = _labels[1] ? i18nObjInLanguage(getLanguage())['minute'] : '';
     List<String> formats = [_formats[1], label];
-    secondList =
-        List.generate(60, (int index) {
+    secondList = List.generate(60, (int index) {
       return '${formatDate(formats, minute: index)}';
     });
   }
@@ -395,7 +394,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
   })  : assert(weights == null || weights.length == 3),
         assert(dividers == null || dividers.length == 2),
         assert(labels == null || labels.length == 3),
-        assert(formats == null || formats.length == 3){
+        assert(formats == null || formats.length == 3) {
     _weights = weights ?? [1, 1, showSeconds ? 1 : 0];
     _dividers = dividers ?? [':', showSeconds ? ':' : ''];
     _formats = formats ?? [HH, mm, ss];
@@ -432,9 +431,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
 
     int destHour = index + minTime.hour;
 
-    DateTime dateTime = currentTime.isUtc
-        ? DateTime.utc(0)
-        : DateTime(0);
+    DateTime dateTime = currentTime.isUtc ? DateTime.utc(0) : DateTime(0);
 
     dateTime = dateTime.add(Duration(
       hours: destHour,
@@ -461,15 +458,12 @@ class TimeRangePickerModel extends BaseDateTimeModel {
     int minMinute = _minMinuteOfCurrentHour();
     int destMinute = minMinute + index;
 
-    DateTime dateTime = currentTime.isUtc
-        ? DateTime.utc(0)
-        : DateTime(0);
+    DateTime dateTime = currentTime.isUtc ? DateTime.utc(0) : DateTime(0);
 
     dateTime = dateTime.add(Duration(
-        hours:  currentTime.hour,
+        hours: currentTime.hour,
         minutes: destMinute,
-        seconds: currentTime.second
-    ));
+        seconds: currentTime.second));
 
     //min/max check
     _checkTime(dateTime);
@@ -485,14 +479,12 @@ class TimeRangePickerModel extends BaseDateTimeModel {
     super.updateThirdIndex(index);
 
     int minSecond = _minSecondOfCurrentMinute();
-    DateTime dateTime = currentTime.isUtc
-        ? DateTime.utc(0)
-        : DateTime(0);
+    DateTime dateTime = currentTime.isUtc ? DateTime.utc(0) : DateTime(0);
 
     currentTime = dateTime.add(Duration(
-      hours:  currentTime.hour,
+      hours: currentTime.hour,
       minutes: currentTime.minute,
-      seconds: minSecond + index
+      seconds: minSecond + index,
     ));
   }
 
@@ -549,7 +541,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
     String label = _labels[2] ? i18nObjInLanguage(getLanguage())['second'] : '';
     List<String> formats = [_formats[2], label];
     thirdList = List.generate(maxSecond - minSecond + 1, (int index) {
-      return '${formatDate(formats, second: minSecond+ index)}';
+      return '${formatDate(formats, second: minSecond + index)}';
     });
   }
 
@@ -594,13 +586,14 @@ class TimeRangePickerModel extends BaseDateTimeModel {
 }
 
 /// 日期时间选择器模型
-/// [年月日 时:分]
+/// [年月日 时:分:秒]
 class DateTimePickerModel extends DatePickerModel {
   final bool showYears;
   late DateTime maxTime;
   late DateTime minTime;
   late int fourthIndex;
   late int fifthIndex;
+  late int sixtyIndex;
 
   /// [currentTime]选择时间
   /// [maxTime] 最大时间
@@ -619,8 +612,8 @@ class DateTimePickerModel extends DatePickerModel {
     List<bool>? labels,
     List<int>? weights,
     List<String>? dividers,
-  })  : assert(weights == null || weights.length == 5),
-        assert(dividers == null || dividers.length == 4),
+  })  : assert(weights == null || weights.length == 6),
+        assert(dividers == null || dividers.length == 5),
         super(
           currentTime: currentTime,
           maxTime: maxTime,
@@ -628,14 +621,16 @@ class DateTimePickerModel extends DatePickerModel {
           labels: labels,
           formats: formats,
         ) {
-    _weights = weights ?? [showYears ? 2 : 0, 1, 1, 1, 1];
-    _dividers = dividers ?? ['', '', '', ':'];
+    _weights = weights ?? [showYears ? 2 : 0, 1, 1, 1, 1, 1];
+    _dividers = dividers ?? ['', '', '', ':', ':'];
 
     int minHour = _minHourOfCurrentDay();
     int minMinute = _minMinuteOfCurrentHour();
+    int minSecond = _minSecondOfCurrentMinute();
 
     fourthIndex = this.currentTime.hour - minHour;
     fifthIndex = this.currentTime.minute - minMinute;
+    sixtyIndex = this.currentTime.second - minSecond;
   }
 
   String? fourthStringAtIndex(int index) {
@@ -651,6 +646,16 @@ class DateTimePickerModel extends DatePickerModel {
   String? fifthStringAtIndex(int index) {
     int max = _maxMinuteOfCurrentHour();
     int min = _minMinuteOfCurrentHour();
+
+    if (index >= 0 && index < max - min + 1) {
+      return padZero(min + index);
+    }
+    return null;
+  }
+
+  String? sixthStringAtIndex(int index) {
+    int max = _maxSecondOfCurrentMinute();
+    int min = _minSecondOfCurrentMinute();
 
     if (index >= 0 && index < max - min + 1) {
       return padZero(min + index);
@@ -677,6 +682,7 @@ class DateTimePickerModel extends DatePickerModel {
             newDay,
             currentTime.hour,
             currentTime.minute,
+            currentTime.second,
           )
         : DateTime(
             destYear,
@@ -684,6 +690,7 @@ class DateTimePickerModel extends DatePickerModel {
             newDay,
             currentTime.hour,
             currentTime.minute,
+            currentTime.second,
           );
     //min/max check
     _checkTime(newTime);
@@ -694,11 +701,13 @@ class DateTimePickerModel extends DatePickerModel {
     int minDay = _minDayOfCurrentMonth();
     int minHour = _minHourOfCurrentDay();
     int minMinute = _minMinuteOfCurrentHour();
+    int minSecond = _minSecondOfCurrentMinute();
 
     secondIndex = currentTime.month - minMonth;
     thirdIndex = currentTime.day - minDay;
     fourthIndex = currentTime.hour - minHour;
     fifthIndex = currentTime.minute - minMinute;
+    sixtyIndex = currentTime.second - minSecond;
   }
 
   @override
@@ -717,6 +726,7 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.day <= dayCount ? currentTime.day : dayCount,
             currentTime.hour,
             currentTime.minute,
+            currentTime.second,
           )
         : DateTime(
             currentTime.year,
@@ -724,6 +734,7 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.day <= dayCount ? currentTime.day : dayCount,
             currentTime.hour,
             currentTime.minute,
+            currentTime.second,
           );
     //min/max check
     _checkTime(newTime);
@@ -732,10 +743,12 @@ class DateTimePickerModel extends DatePickerModel {
     int minDay = _minDayOfCurrentMonth();
     int minHour = _minHourOfCurrentDay();
     int minMinute = _minMinuteOfCurrentHour();
+    int minSecond = _minSecondOfCurrentMinute();
 
     thirdIndex = currentTime.day - minDay;
     fourthIndex = currentTime.hour - minHour;
     fifthIndex = currentTime.minute - minMinute;
+    sixtyIndex = currentTime.second - minSecond;
   }
 
   @override
@@ -750,6 +763,7 @@ class DateTimePickerModel extends DatePickerModel {
             minDay + index,
             currentTime.hour,
             currentTime.minute,
+            currentTime.second,
           )
         : DateTime(
             currentTime.year,
@@ -757,13 +771,16 @@ class DateTimePickerModel extends DatePickerModel {
             minDay + index,
             currentTime.hour,
             currentTime.minute,
+            currentTime.second,
           );
 
     int minHour = _minHourOfCurrentDay();
     int minMinute = _minMinuteOfCurrentHour();
+    int minSecond = _minSecondOfCurrentMinute();
 
     fourthIndex = currentTime.hour - minHour;
     fifthIndex = currentTime.minute - minMinute;
+    sixtyIndex = currentTime.second - minSecond;
   }
 
   void updateFourthIndex(int index) {
@@ -777,6 +794,7 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.day,
             minHour + index,
             currentTime.minute,
+            currentTime.second,
           )
         : DateTime(
             currentTime.year,
@@ -784,10 +802,14 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.day,
             minHour + index,
             currentTime.minute,
+            currentTime.second,
           );
 
     int minMinute = _minMinuteOfCurrentHour();
+    int minSecond = _minSecondOfCurrentMinute();
+
     fifthIndex = currentTime.minute - minMinute;
+    sixtyIndex = currentTime.second - minSecond;
   }
 
   void updateFifthIndex(int index) {
@@ -801,6 +823,7 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.day,
             currentTime.hour,
             minMinute + index,
+            currentTime.second,
           )
         : DateTime(
             currentTime.year,
@@ -808,6 +831,32 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.day,
             currentTime.hour,
             minMinute + index,
+            currentTime.second,
+          );
+    int minSecond = _minSecondOfCurrentMinute();
+    sixtyIndex = currentTime.second - minSecond;
+  }
+
+  void updateSixthIndex(int index) {
+    this.sixtyIndex = index;
+
+    int minSecond = _minSecondOfCurrentMinute();
+    currentTime = currentTime.isUtc
+        ? DateTime.utc(
+            currentTime.year,
+            currentTime.month,
+            currentTime.day,
+            currentTime.hour,
+            currentTime.minute,
+            minSecond + index,
+          )
+        : DateTime(
+            currentTime.year,
+            currentTime.month,
+            currentTime.day,
+            currentTime.hour,
+            currentTime.minute,
+            minSecond + index,
           );
   }
 
@@ -851,4 +900,24 @@ class DateTimePickerModel extends DatePickerModel {
         ? minTime.minute
         : 0;
   }
+
+  /// 当前分钟最大秒
+  int _maxSecondOfCurrentMinute() {
+    return currentTime.year == maxTime.year &&
+            currentTime.month == maxTime.month &&
+            currentTime.day == maxTime.day &&
+            currentTime.hour == maxTime.hour &&
+            currentTime.minute == maxTime.minute
+        ? maxTime.second
+        : 59;
+  }
+
+  /// 当前分钟最小秒
+  int _minSecondOfCurrentMinute() => currentTime.year == minTime.year &&
+          currentTime.month == minTime.month &&
+          currentTime.day == minTime.day &&
+          currentTime.hour == minTime.hour &&
+          currentTime.minute == minTime.minute
+      ? minTime.second
+      : 0;
 }

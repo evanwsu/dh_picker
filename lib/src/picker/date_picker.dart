@@ -242,13 +242,14 @@ class _DatePickerState extends BaseDatePickerState {
   }
 }
 
-/// 年月日 时分时间选择器
+/// 年月日 时分秒时间选择器
 class _DateTimePickerState extends BaseDatePickerState {
   late FixedExtentScrollController firstController;
   late FixedExtentScrollController secondController;
   late FixedExtentScrollController thirdController;
   late FixedExtentScrollController fourthController;
   late FixedExtentScrollController fifthController;
+  late FixedExtentScrollController sixthController;
 
   @override
   void initScrollControl() {
@@ -264,6 +265,8 @@ class _DateTimePickerState extends BaseDatePickerState {
         FixedExtentScrollController(initialItem: model.fourthIndex);
     fifthController =
         FixedExtentScrollController(initialItem: model.fifthIndex);
+    sixthController =
+        FixedExtentScrollController(initialItem: model.sixtyIndex);
   }
 
   @override
@@ -273,6 +276,7 @@ class _DateTimePickerState extends BaseDatePickerState {
     thirdController.dispose();
     fourthController.dispose();
     fifthController.dispose();
+    sixthController.dispose();
   }
 
   @override
@@ -282,6 +286,7 @@ class _DateTimePickerState extends BaseDatePickerState {
     String secondDivider = pickerModel.dividers[1];
     String thirdDivider = pickerModel.dividers[2];
     String fourthDivider = pickerModel.dividers[3];
+    String fifthDivider = pickerModel.dividers[4];
 
     bool hasYear = pickerModel.weights[0] > 0;
 
@@ -421,14 +426,44 @@ class _DateTimePickerState extends BaseDatePickerState {
               pickerModel.weights[4],
               widget.paddingBuilder?.call(4) ??
                   const EdgeInsets.only(
-                      left: 0, top: 10, bottom: 10, right: 16),
+                      left: 0, top: 10, bottom: 10, right: 0),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(4),
               fifthController,
               pickerModel.fifthStringAtIndex,
               (index) {
-                pickerModel.updateFifthIndex(index);
+                initScrollControl();
+                _onDateChange();
+              },
+              null,
+            ),
+
+          if (fifthDivider.isNotEmpty)
+            Text(
+              fifthDivider,
+              style: widget.theme.dividerStyle,
+            ),
+          // 秒
+          if(pickerModel.weights[5] > 0)
+            _renderPickerItem(
+              ValueKey(pickerModel.fifthIndex * 100000000 +
+                  pickerModel.fourthIndex * 1000000 +
+                  pickerModel.thirdIndex * 10000 +
+                  pickerModel.secondIndex * 100 +
+                  pickerModel.firstIndex),
+              widget.theme,
+              pickerModel.weights[5],
+              widget.paddingBuilder?.call(5) ??
+                  const EdgeInsets.only(
+                      left: 0, top: 10, bottom: 10, right: 16),
+              widget.selectionOverlayBuilder == null
+                  ? _kOverlay
+                  : widget.selectionOverlayBuilder?.call(5),
+              sixthController,
+              pickerModel.sixthStringAtIndex,
+                  (index) {
+                pickerModel.updateSixthIndex(index);
                 _onDateChange();
               },
               null,
