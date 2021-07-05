@@ -621,7 +621,7 @@ class DateTimePickerModel extends DatePickerModel {
           labels: labels,
           formats: formats,
         ) {
-    _weights = weights ?? [showYears ? 2 : 0, 1, 1, 1, 1, 1];
+    _weights = weights ?? [showYears ? 4 : 0, 3, 3, 2, 2, 2];
     _dividers = dividers ?? ['', '', '', ':', ':'];
 
     int minHour = _minHourOfCurrentDay();

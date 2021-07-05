@@ -99,12 +99,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                   pickerTheme: PickerTheme(
                     height: 180.0,
+                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                   ),
                   pickerModel: DateTimePickerModel(
                     maxTime: DateTime(2022, 12, 1, 5, 6, 7),
                     minTime: DateTime(2020, 11, 2, 3, 4, 5),
                     currentTime: selectTime,
-                    // dividers: ['', '/', '', ':'],
+                    // weights: [2, 1, 1, 1, 1, 0],
+                    dividers: ['', '/', '', ':', ''],
                   ),
                   pickerOverlay: Row(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -113,20 +115,23 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 18,
                       ),
                       Expanded(
+                        flex: 2,
                           child: DefaultSelectionOverlay(
                         borderColor: Colors.red,
                       )),
                       SizedBox(
-                        width: 27,
+                        width: 18,
                       ),
                       Expanded(
+                        flex: 3,
                           child: DefaultSelectionOverlay(
                         borderColor: Colors.red,
                       )),
                       SizedBox(
-                        width: 27,
+                        width: 18,
                       ),
                       Expanded(
+                        flex: 3,
                           child: DefaultSelectionOverlay(
                         borderColor: Colors.red,
                       )),

@@ -307,9 +307,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               ValueKey(pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[0],
-              widget.paddingBuilder?.call(0) ??
-                  const EdgeInsets.only(
-                      left: 16, top: 10, right: 10, bottom: 10),
+              widget.paddingBuilder?.call(0),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(0),
@@ -337,9 +335,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   hasYear ? pickerModel.firstIndex : pickerModel.secondIndex),
               widget.theme,
               pickerModel.weights[1],
-              widget.paddingBuilder?.call(1) ??
-                  const EdgeInsets.only(
-                      left: 10, top: 10, right: 6, bottom: 10),
+              widget.paddingBuilder?.call(1),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(1),
@@ -366,9 +362,7 @@ class _DateTimePickerState extends BaseDatePickerState {
               ValueKey(pickerModel.secondIndex * 100 + pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[2],
-              widget.paddingBuilder?.call(2) ??
-                  const EdgeInsets.only(
-                      left: 6, top: 10, right: 10, bottom: 10),
+              widget.paddingBuilder?.call(2),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(2),
@@ -395,9 +389,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[3],
-              widget.paddingBuilder?.call(3) ??
-                  const EdgeInsets.only(
-                      left: 16, right: 0, top: 10, bottom: 10),
+              widget.paddingBuilder?.call(3),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(3),
@@ -424,9 +416,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[4],
-              widget.paddingBuilder?.call(4) ??
-                  const EdgeInsets.only(
-                      left: 0, top: 10, bottom: 10, right: 0),
+              widget.paddingBuilder?.call(4),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(4),
@@ -454,9 +444,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   pickerModel.firstIndex),
               widget.theme,
               pickerModel.weights[5],
-              widget.paddingBuilder?.call(5) ??
-                  const EdgeInsets.only(
-                      left: 0, top: 10, bottom: 10, right: 16),
+              widget.paddingBuilder?.call(5),
               widget.selectionOverlayBuilder == null
                   ? _kOverlay
                   : widget.selectionOverlayBuilder?.call(5),
