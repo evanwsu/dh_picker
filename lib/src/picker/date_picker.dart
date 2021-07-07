@@ -370,8 +370,10 @@ class _DateTimePickerState extends BaseDatePickerState {
               pickerModel.thirdStringAtIndex,
               pickerModel.updateThirdIndex,
               (index) {
-                initScrollControl();
-                _onDateChange();
+                setState((){
+                  initScrollControl();
+                  _onDateChange();
+                });
               },
             ),
 
@@ -397,8 +399,10 @@ class _DateTimePickerState extends BaseDatePickerState {
               pickerModel.fourthStringAtIndex,
               pickerModel.updateFourthIndex,
               (index) {
-                initScrollControl();
-                _onDateChange();
+                setState((){
+                  initScrollControl();
+                  _onDateChange();
+                });
               },
             ),
 
@@ -422,11 +426,13 @@ class _DateTimePickerState extends BaseDatePickerState {
                   : widget.selectionOverlayBuilder?.call(4),
               fifthController,
               pickerModel.fifthStringAtIndex,
+              pickerModel.updateFifthIndex,
               (index) {
-                initScrollControl();
-                _onDateChange();
+                setState((){
+                  initScrollControl();
+                  _onDateChange();
+                });
               },
-              null,
             ),
 
           if (fifthDivider.isNotEmpty)

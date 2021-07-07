@@ -756,7 +756,7 @@ class DateTimePickerModel extends DatePickerModel {
     this.thirdIndex = index;
 
     int minDay = _minDayOfCurrentMonth();
-    currentTime = currentTime.isUtc
+    var newTime = currentTime.isUtc
         ? DateTime.utc(
             currentTime.year,
             currentTime.month,
@@ -773,6 +773,8 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.minute,
             currentTime.second,
           );
+    //min/max check
+    _checkTime(newTime);
 
     int minHour = _minHourOfCurrentDay();
     int minMinute = _minMinuteOfCurrentHour();
@@ -787,7 +789,7 @@ class DateTimePickerModel extends DatePickerModel {
     this.fourthIndex = index;
 
     int minHour = _minHourOfCurrentDay();
-    currentTime = currentTime.isUtc
+    var newTime = currentTime.isUtc
         ? DateTime.utc(
             currentTime.year,
             currentTime.month,
@@ -804,6 +806,8 @@ class DateTimePickerModel extends DatePickerModel {
             currentTime.minute,
             currentTime.second,
           );
+
+    _checkTime(newTime);
 
     int minMinute = _minMinuteOfCurrentHour();
     int minSecond = _minSecondOfCurrentMinute();
@@ -816,7 +820,7 @@ class DateTimePickerModel extends DatePickerModel {
     this.fifthIndex = index;
 
     int minMinute = _minMinuteOfCurrentHour();
-    currentTime = currentTime.isUtc
+    var newTime = currentTime.isUtc
         ? DateTime.utc(
             currentTime.year,
             currentTime.month,
@@ -833,6 +837,8 @@ class DateTimePickerModel extends DatePickerModel {
             minMinute + index,
             currentTime.second,
           );
+    _checkTime(newTime);
+
     int minSecond = _minSecondOfCurrentMinute();
     sixtyIndex = currentTime.second - minSecond;
   }
@@ -860,13 +866,7 @@ class DateTimePickerModel extends DatePickerModel {
           );
   }
 
-  bool isAtSameDay(DateTime? day1, DateTime? day2) {
-    return day1 != null &&
-        day2 != null &&
-        day1.difference(day2).inDays == 0 &&
-        day1.day == day2.day;
-  }
-
+  /// 当前天最大小时
   int _maxHourOfCurrentDay() {
     return currentTime.year == maxTime.year &&
             currentTime.month == maxTime.month &&
@@ -875,6 +875,7 @@ class DateTimePickerModel extends DatePickerModel {
         : 23;
   }
 
+  /// 当前天最小小时
   int _minHourOfCurrentDay() {
     return currentTime.year == minTime.year &&
             currentTime.month == minTime.month &&
@@ -883,6 +884,7 @@ class DateTimePickerModel extends DatePickerModel {
         : 0;
   }
 
+  /// 当前小时最大分钟
   int _maxMinuteOfCurrentHour() {
     return currentTime.year == maxTime.year &&
             currentTime.month == maxTime.month &&
@@ -892,6 +894,7 @@ class DateTimePickerModel extends DatePickerModel {
         : 59;
   }
 
+  /// 当前小时最小分钟
   int _minMinuteOfCurrentHour() {
     return currentTime.year == minTime.year &&
             currentTime.month == minTime.month &&
