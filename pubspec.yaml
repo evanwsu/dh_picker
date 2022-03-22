@@ -1,18 +1,16 @@
 name: dh_picker
 description: 选择器控件，支持StringPicker, NumberPicker, DateTimePicker.
-version: 0.0.7
+version: 1.0.0
 author: evanwo
 homepage: https://github.com/evansherry/dh_picker
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0 <2.0.0"
 
 dependencies:
   flutter:
     sdk: flutter
-  intl: ^0.17.0-nullsafety.2
-#  intl: ^0.16.1
+  intl: ^0.17.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
