@@ -586,13 +586,7 @@ class QuarterPickerModel extends BaseDateTimeModel {
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
     this.minTime = minTime ?? DateTime(1970, 1, 1);
 
-    currentTime = currentTime ?? DateTime.now();
-    if (currentTime.compareTo(this.maxTime) > 0) {
-      currentTime = this.maxTime;
-    } else if (currentTime.compareTo(this.minTime) < 0) {
-      currentTime = this.minTime;
-    }
-    this.currentTime = currentTime;
+    _checkTime(currentTime ??= DateTime.now());
 
     _fillYearList();
     _fillQuarterList();
@@ -627,7 +621,6 @@ class QuarterPickerModel extends BaseDateTimeModel {
   @override
   void updateFirstIndex(int index) {
     super.updateFirstIndex(index);
-
     int destYear = index + minTime.year;
     DateTime newTime = currentTime.isUtc
         ? DateTime.utc(destYear, currentTime.month)
@@ -679,12 +672,13 @@ class QuarterPickerModel extends BaseDateTimeModel {
 
   void _checkTime(DateTime newTime) {
     if (newTime.isAfter(maxTime)) {
-      currentTime = maxTime;
+      newTime = maxTime;
     } else if (newTime.isBefore(minTime)) {
-      currentTime = minTime;
-    } else {
-      currentTime = newTime;
+      newTime = minTime;
     }
+    final quarter = getQuarter(newTime.month);
+    final month = getMonthByQuarter(quarter);
+    currentTime = DateTime(newTime.year, month);
   }
 }
 
