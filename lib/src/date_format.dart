@@ -1,3 +1,4 @@
+import 'package:dh_picker/src/date_util.dart';
 import 'package:intl/intl.dart';
 
 import 'res/strings.dart';
@@ -119,6 +120,15 @@ const String ss = 'ss';
 ///     // => 2
 const String s = 's';
 
+/// 一季度
+const String QQQ = 'QQQ';
+
+/// 第一季度
+const String QQQQ = 'QQQQ';
+
+/// 半年度
+const String S = 'S';
+
 String formatDate(List<String?> formats,
     {int? year, int? month, int? day, int? hour, int? minute, int? second}) {
   final sb = new StringBuffer();
@@ -171,6 +181,18 @@ String formatDate(List<String?> formats,
     } else if (format == s) {
       assert(second != null, 'Formatted second, no value set');
       sb.write(second);
+    } else if (format == QQQQ) {
+      final quarterLong =
+          i18nObjInLanguageLookup(language, 'quarterLong', getQuarter(month!));
+      sb.write(quarterLong);
+    } else if (format == QQQ) {
+      final quarterShort =
+          i18nObjInLanguageLookup(language, 'quarterShort', getQuarter(month!));
+      sb.write(quarterShort);
+    } else if (format == S) {
+      final semiannual = i18nObjInLanguageLookup(
+          language, 'semiannual', getSemiannual(month!));
+      sb.write(semiannual);
     } else if (format?.isNotEmpty == true) {
       sb.write(format);
     }

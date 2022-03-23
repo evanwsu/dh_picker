@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'date_format.dart';
-import 'model/date_model.dart';
+import 'model/base_model.dart';
 import 'picker/date_picker.dart';
 import 'picker_theme.dart';
 import 'res/strings.dart';

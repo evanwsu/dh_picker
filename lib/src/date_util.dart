@@ -12,3 +12,12 @@ int calcDateCount(int year, int month) {
   return 30;
 }
 
+/// 根据[month] 计算季度
+int getQuarter(int month) => (month - 1) ~/ 3;
+
+/// 根据[month] 计算半年度
+int getSemiannual(int month) => (month - 1) ~/ 6;
+
+int getMonthByQuarter(int quarter) => quarter * 3 + 1;
+
+int getMonthBySemiannual(int semiannual) => semiannual * 6 + 1;

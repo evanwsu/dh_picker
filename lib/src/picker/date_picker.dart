@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
+import '../model/base_model.dart';
 import '../model/date_model.dart';
 import '../picker/picker.dart';
 import '../picker_theme.dart';
@@ -150,13 +150,15 @@ class _DatePickerState extends BaseDatePickerState {
   Widget build(BuildContext context) {
     BaseDateTimeModel pickerModel = widget.pickerModel;
     String? firstDivider, secondDivider;
-    firstDivider = pickerModel.dividers[0];
-    secondDivider = pickerModel.dividers[1];
+    if (pickerModel.dividers.length > 0) firstDivider = pickerModel.dividers[0];
+    if (pickerModel.dividers.length > 1)
+      secondDivider = pickerModel.dividers[1];
 
     Color? backgroundColor = widget.theme.backgroundColor;
     if (widget.theme.decoration == null) {
       backgroundColor ??= Colors.white;
     }
+
     return Container(
         color: backgroundColor,
         decoration: widget.theme.decoration,
@@ -165,7 +167,7 @@ class _DatePickerState extends BaseDatePickerState {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             // 年
-            if (pickerModel.weights[0] > 0)
+            if (pickerModel.weights.length > 0 && pickerModel.weights[0] > 0)
               _renderPickerItem(
                 ValueKey(pickerModel.firstIndex),
                 widget.theme,
@@ -185,14 +187,14 @@ class _DatePickerState extends BaseDatePickerState {
                 },
               ),
 
-            if (firstDivider.isNotEmpty)
+            if (firstDivider != null && firstDivider.isNotEmpty)
               Text(
                 firstDivider,
                 style: widget.theme.dividerStyle,
               ),
 
             // 月
-            if (pickerModel.weights[1] > 0)
+            if (pickerModel.weights.length > 1 && pickerModel.weights[1] > 0)
               _renderPickerItem(
                 ValueKey(pickerModel.firstIndex),
                 widget.theme,
@@ -212,14 +214,11 @@ class _DatePickerState extends BaseDatePickerState {
                 },
               ),
 
-            if (secondDivider.isNotEmpty)
-              Text(
-                secondDivider,
-                style: widget.theme.dividerStyle,
-              ),
+            if (secondDivider != null && secondDivider.isNotEmpty)
+              Text(secondDivider, style: widget.theme.dividerStyle),
 
             // 日
-            if (pickerModel.weights[2] > 0)
+            if (pickerModel.weights.length > 2 && pickerModel.weights[2] > 0)
               _renderPickerItem(
                 ValueKey(
                     pickerModel.secondIndex * 100 + pickerModel.firstIndex),
@@ -282,13 +281,21 @@ class _DateTimePickerState extends BaseDatePickerState {
   @override
   Widget build(BuildContext context) {
     DateTimePickerModel pickerModel = widget.pickerModel as DateTimePickerModel;
-    String firstDivider = pickerModel.dividers[0];
-    String secondDivider = pickerModel.dividers[1];
-    String thirdDivider = pickerModel.dividers[2];
-    String fourthDivider = pickerModel.dividers[3];
-    String fifthDivider = pickerModel.dividers[4];
+    String? firstDivider,
+        secondDivider,
+        thirdDivider,
+        fourthDivider,
+        fifthDivider;
 
-    bool hasYear = pickerModel.weights[0] > 0;
+    if (pickerModel.dividers.length > 0) firstDivider = pickerModel.dividers[0];
+    if (pickerModel.dividers.length > 1)
+      secondDivider = pickerModel.dividers[1];
+    if (pickerModel.dividers.length > 2) thirdDivider = pickerModel.dividers[2];
+    if (pickerModel.dividers.length > 3)
+      fourthDivider = pickerModel.dividers[3];
+    if (pickerModel.dividers.length > 4) fifthDivider = pickerModel.dividers[4];
+
+    bool hasYear = pickerModel.weights.length > 0 && pickerModel.weights[0] > 0;
 
     Color? backgroundColor = widget.theme.backgroundColor;
     if (widget.theme.decoration == null) {
@@ -322,14 +329,14 @@ class _DateTimePickerState extends BaseDatePickerState {
               },
             ),
 
-          if (hasYear && firstDivider.isNotEmpty)
+          if (hasYear && firstDivider != null && firstDivider.isNotEmpty)
             Text(
               firstDivider,
               style: widget.theme.dividerStyle,
             ),
 
           // 月
-          if (pickerModel.weights[1] > 0)
+          if (pickerModel.weights.length > 1 && pickerModel.weights[1] > 0)
             _renderPickerItem(
               ValueKey(
                   hasYear ? pickerModel.firstIndex : pickerModel.secondIndex),
@@ -350,14 +357,14 @@ class _DateTimePickerState extends BaseDatePickerState {
               },
             ),
 
-          if (secondDivider.isNotEmpty)
+          if (secondDivider != null && secondDivider.isNotEmpty)
             Text(
               secondDivider,
               style: widget.theme.dividerStyle,
             ),
 
           // 日
-          if (pickerModel.weights[2] > 0)
+          if (pickerModel.weights.length > 2 && pickerModel.weights[2] > 0)
             _renderPickerItem(
               ValueKey(pickerModel.secondIndex * 100 + pickerModel.firstIndex),
               widget.theme,
@@ -370,21 +377,21 @@ class _DateTimePickerState extends BaseDatePickerState {
               pickerModel.thirdStringAtIndex,
               pickerModel.updateThirdIndex,
               (index) {
-                setState((){
+                setState(() {
                   initScrollControl();
                   _onDateChange();
                 });
               },
             ),
 
-          if (thirdDivider.isNotEmpty)
+          if (thirdDivider != null && thirdDivider.isNotEmpty)
             Text(
               thirdDivider,
               style: widget.theme.dividerStyle,
             ),
 
           // 时
-          if (pickerModel.weights[3] > 0)
+          if (pickerModel.weights.length > 3 && pickerModel.weights[3] > 0)
             _renderPickerItem(
               ValueKey(pickerModel.thirdIndex * 10000 +
                   pickerModel.secondIndex * 100 +
@@ -399,20 +406,20 @@ class _DateTimePickerState extends BaseDatePickerState {
               pickerModel.fourthStringAtIndex,
               pickerModel.updateFourthIndex,
               (index) {
-                setState((){
+                setState(() {
                   initScrollControl();
                   _onDateChange();
                 });
               },
             ),
 
-          if (fourthDivider.isNotEmpty)
+          if (fourthDivider != null && fourthDivider.isNotEmpty)
             Text(
               fourthDivider,
               style: widget.theme.dividerStyle,
             ),
           // 分
-          if (pickerModel.weights[4] > 0)
+          if (pickerModel.weights.length > 4 && pickerModel.weights[4] > 0)
             _renderPickerItem(
               ValueKey(pickerModel.fourthIndex * 1000000 +
                   pickerModel.thirdIndex * 10000 +
@@ -428,20 +435,20 @@ class _DateTimePickerState extends BaseDatePickerState {
               pickerModel.fifthStringAtIndex,
               pickerModel.updateFifthIndex,
               (index) {
-                setState((){
+                setState(() {
                   initScrollControl();
                   _onDateChange();
                 });
               },
             ),
 
-          if (fifthDivider.isNotEmpty)
+          if (fifthDivider != null && fifthDivider.isNotEmpty)
             Text(
               fifthDivider,
               style: widget.theme.dividerStyle,
             ),
           // 秒
-          if(pickerModel.weights[5] > 0)
+          if (pickerModel.weights.length > 5 && pickerModel.weights[5] > 0)
             _renderPickerItem(
               ValueKey(pickerModel.fifthIndex * 100000000 +
                   pickerModel.fourthIndex * 1000000 +
@@ -456,7 +463,7 @@ class _DateTimePickerState extends BaseDatePickerState {
                   : widget.selectionOverlayBuilder?.call(5),
               sixthController,
               pickerModel.sixthStringAtIndex,
-                  (index) {
+              (index) {
                 pickerModel.updateSixthIndex(index);
                 _onDateChange();
               },
