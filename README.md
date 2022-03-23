@@ -1,6 +1,10 @@
-`dh_picker` 选择器控件 
+`dh_picker` 选择器控件，支持数字选择，字符串选择，日期选择，自定义选择。
+Depend on it This will add a line like this to your package's pubspec.yaml
 
-
+```
+dependencies:
+  dh_picker: ^1.0.0
+```
 
 `num_picker` 数字选择器
 
@@ -31,13 +35,9 @@ NumberPicker(
 )
 ```
 
-
-
 `string_picker` 字符串选择器
 
 ![字符串选择器](./screenshot/string_picker.jpg)
-
-
 
 ```
 StringPicker(
@@ -49,19 +49,34 @@ StringPicker(
   )
 ```
 
-
-
-
-
 `date_picker` 日期时间选择器，参考[flutter_date_picker](https://github.com/Realank/flutter_datetime_picker)
 
 ![字符串选择器](./screenshot/show_picker.jpg)
 
+`pickerModel`选择器数据模型，已支持下列模型。
+`DatePickerModel` 日期（xxxx年xx月xx日）
+`DateTimePickerModel` 日期时间（xxxx年xx月xx日 xx时:xx分:xx秒）
+`QuarterPickerModel` 日期季度 （xxxx年第一季度）
+`SemiannualPickerModel` 日期半年度 （xxxx年上半年）
+`TimePickerModel` 时间（xx时:xx分:xx秒）无范围限制。
+`TimeRangePickerModel` 时间范围 （xx时:xx分:xx秒），相比`TimePickerModel`可设置最大最小时间范围。
 
+`pickerModel` 参数介绍：
+`currentTime`当前日期时间，未设置使用系统当前时间。
+`maxTime`最大日期时间
+`minTime`最小日期时间
+`formats`日期格式化，数组长度，由当前模型特性(内部picker个数)决定。 例如年通常格式化为： yyyy。季度格式化：QQQQ(第一季度)，QQQ(一季度)。
+年月日补充说明，它们的格式化补0，多语言其它地区不需要单位，根据label来决定是否显示单位（年月日）。
+`label` 标识单位是否显示
+`weights` 内部picker控件权重
+`dividers` 内部picker间隔符
 
-`pickerOverlay`  选择器上面覆盖层，通常用于自定义`selectionOverlay`。
+`pickerOverlay`  选择器上覆盖层，通常用于添加分割线，支持自定义`selectionOverlay`。
 
-每个选择器都可以设置`selectionOverlay`，可能达不到逾期效果，通过设置`pickerOverlay` 解决，注意设置`selectionOverlayBuilder: (int index) => null`
+每个选择器都可以设置`selectionOverlay`，若达不到预期效果，可以设置`pickerOverlay` 自定义Overlay。
+`pickerOverlay` 会在当前Picker上添加Overlay，`selectionOverlayBuilder`
+是在每个内部picker添加Overlay，如果未设置会添加一个默认的Overlay，所以使用`pickerOverlay`
+时，需要设置`selectionOverlayBuilder: (int index) => null`。
 
 ```
 showPicker(context, builder: (BuildContext context) {

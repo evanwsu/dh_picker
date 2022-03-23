@@ -1,3 +1,7 @@
+## [1.0.0] - 2022.3.23
+
+- DateTimePick quarterly and annual
+
 ## [0.0.7] - 2021.7.7
  
 - fix DateTimePick
