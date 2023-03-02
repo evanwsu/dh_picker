@@ -1,3 +1,7 @@
+## [1.0.1] - 2023.3.2
+
+- set picker height
+
 ## [1.0.0] - 2022.3.23
 
 - DateTimePick quarterly and annual

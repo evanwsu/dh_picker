@@ -1,6 +1,6 @@
 name: dh_picker
 description: 选择器控件，支持StringPicker, NumberPicker, DateTimePicker.
-version: 1.0.0
+version: 1.0.1
 author: evanwo
 homepage: https://github.com/evansherry/dh_picker
 

@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 /// 默认选择器高度
-const _kPickerHeight = 260;
+const _kPickerHeight = 260.0;
 
 Future<DateTime?> showPicker(
   BuildContext context, {
@@ -12,10 +10,12 @@ Future<DateTime?> showPicker(
   Color? barrierColor = Colors.black54,
   Duration transitionDuration = const Duration(milliseconds: 200),
   bool useRootNavigator = true,
+  double pickerHeight = _kPickerHeight,
 }) async {
   return await Navigator.of(context, rootNavigator: useRootNavigator).push(
     _PickerRouter(
       builder: builder,
+      pickerHeight: pickerHeight,
       barrierColor: barrierColor,
       barrierDismissible: barrierDismissible,
       transitionDuration: transitionDuration,
@@ -25,13 +25,15 @@ Future<DateTime?> showPicker(
 
 class _PickerRouter<T> extends PopupRoute<T> {
   final WidgetBuilder builder;
+  final double pickerHeight;
 
   _PickerRouter({
     required this.builder,
+    required this.pickerHeight,
     Color? barrierColor,
     bool barrierDismissible = true,
     required Duration transitionDuration,
-  })   : _barrierColor = barrierColor,
+  })  : _barrierColor = barrierColor,
         _barrierDismissible = barrierDismissible,
         _transitionDuration = transitionDuration;
 
@@ -76,19 +78,15 @@ class _PickerRouter<T> extends PopupRoute<T> {
                 delegate: _BottomPickerLayout(
                   animation.value,
                   bottomPadding: bottomPadding,
+                  height: pickerHeight,
                 ),
                 child: GestureDetector(
-                  child: Material(
-                    color: Colors.transparent,
-                    child: child,
-                  ),
+                  child: Material(color: Colors.transparent, child: child),
                 ),
               ),
             );
           },
-          child: Builder(
-            builder: builder,
-          ),
+          child: Builder(builder: builder),
         ),
       ),
     );
@@ -101,10 +99,12 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
   _BottomPickerLayout(
     this.progress, {
     this.bottomPadding = 0,
+    this.height = _kPickerHeight,
   });
 
   final double progress;
   final double bottomPadding;
+  final double height;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
@@ -112,7 +112,7 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
       minWidth: constraints.maxWidth,
       maxWidth: constraints.maxWidth,
       minHeight: 0.0,
-      maxHeight: _kPickerHeight + bottomPadding,
+      maxHeight: height + bottomPadding,
     );
   }
 
