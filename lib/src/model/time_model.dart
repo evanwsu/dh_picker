@@ -13,7 +13,7 @@ class TimePickerModel extends BaseDateTimeModel {
 
   TimePickerModel({
     DateTime? currentTime,
-    this.showSeconds: false,
+    this.showSeconds = false,
     List<String>? formats,
     List<bool>? labels,
     List<int>? weights,
@@ -117,7 +117,7 @@ class TimeRangePickerModel extends BaseDateTimeModel {
     DateTime? currentTime,
     DateTime? maxTime,
     DateTime? minTime,
-    this.showSeconds: false,
+    this.showSeconds = false,
     List<String>? formats,
     List<bool>? labels,
     List<int>? weights,

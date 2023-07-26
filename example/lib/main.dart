@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
@@ -35,7 +35,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    DateTime selectTime;
+    DateTime? selectTime;
 
     return Scaffold(
       appBar: AppBar(
@@ -115,26 +115,26 @@ class _MyHomePageState extends State<MyHomePage> {
                         width: 18,
                       ),
                       Expanded(
-                        flex: 2,
+                          flex: 2,
                           child: DefaultSelectionOverlay(
-                        borderColor: Colors.red,
-                      )),
+                            borderColor: Colors.red,
+                          )),
                       SizedBox(
                         width: 18,
                       ),
                       Expanded(
-                        flex: 3,
+                          flex: 3,
                           child: DefaultSelectionOverlay(
-                        borderColor: Colors.red,
-                      )),
+                            borderColor: Colors.red,
+                          )),
                       SizedBox(
                         width: 18,
                       ),
                       Expanded(
-                        flex: 3,
+                          flex: 3,
                           child: DefaultSelectionOverlay(
-                        borderColor: Colors.red,
-                      )),
+                            borderColor: Colors.red,
+                          )),
                       SizedBox(
                         width: 18,
                       ),
