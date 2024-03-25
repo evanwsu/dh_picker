@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 /// 默认选择器高度
 const _kPickerHeight = 260.0;
 
-Future<DateTime?> showPicker(
+Future showPicker(
   BuildContext context, {
   required WidgetBuilder builder,
   bool barrierDismissible = true,
@@ -11,8 +11,8 @@ Future<DateTime?> showPicker(
   Duration transitionDuration = const Duration(milliseconds: 200),
   bool useRootNavigator = true,
   double pickerHeight = _kPickerHeight,
-}) async {
-  return await Navigator.of(context, rootNavigator: useRootNavigator).push(
+}){
+  return Navigator.of(context, rootNavigator: useRootNavigator).push(
     _PickerRouter(
       builder: builder,
       pickerHeight: pickerHeight,

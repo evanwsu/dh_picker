@@ -1,4 +1,8 @@
-## [1.0.1] - 2023.7.26
+## [1.0.3] - 2024.3.25
+
+- Deletes the showPicker qualified return type
+
+## [1.0.2] - 2023.7.26
 
 - upgrade environment
 
