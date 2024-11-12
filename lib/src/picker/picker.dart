@@ -44,14 +44,10 @@ class DHPicker extends StatefulWidget {
     required this.onSelectedItemChanged,
     required List<Widget> children,
     bool looping = false,
-  })  : assert(children != null),
-        assert(diameterRatio != null),
-        assert(diameterRatio > 0.0,
+  })  : assert(diameterRatio > 0.0,
             RenderListWheelViewport.diameterRatioZeroMessage),
         assert(magnification > 0),
-        assert(itemExtent != null),
         assert(itemExtent > 0),
-        assert(squeeze != null),
         assert(squeeze > 0),
         childDelegate = looping
             ? ListWheelChildLoopingListDelegate(children: children)
@@ -75,14 +71,10 @@ class DHPicker extends StatefulWidget {
     required NullableIndexedWidgetBuilder itemBuilder,
     int? childCount,
     this.selectionOverlay = const DefaultSelectionOverlay(),
-  })  : assert(itemBuilder != null),
-        assert(diameterRatio != null),
-        assert(diameterRatio > 0.0,
+  })  : assert(diameterRatio > 0.0,
             RenderListWheelViewport.diameterRatioZeroMessage),
         assert(magnification > 0),
-        assert(itemExtent != null),
         assert(itemExtent > 0),
-        assert(squeeze != null),
         assert(squeeze > 0),
         childDelegate = ListWheelChildBuilderDelegate(
             builder: itemBuilder, childCount: childCount),
@@ -213,9 +205,7 @@ class DefaultSelectionOverlay extends StatelessWidget {
     Key? key,
     this.borderColor = DHColors.color_000000_15,
     this.borderWidth = .3,
-  })  : assert(borderColor != null),
-        assert(borderWidth != null),
-        assert(borderWidth >= 0.0),
+  })  : assert(borderWidth >= 0.0),
         super(key: key);
 
   @override

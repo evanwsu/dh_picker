@@ -43,15 +43,11 @@ class StringPicker extends StatelessWidget {
     this.label,
     this.labelPadding,
     this.labelAlignment = Alignment.center,
-  })  : assert(diameterRatio != null),
-        assert(diameterRatio > 0.0,
+  })  : assert(diameterRatio > 0.0,
             RenderListWheelViewport.diameterRatioZeroMessage),
         assert(magnification > 0),
-        assert(itemExtent != null),
         assert(itemExtent > 0),
-        assert(squeeze != null),
         assert(squeeze > 0),
-        assert(data != null),
         super(key: key);
 
   @override

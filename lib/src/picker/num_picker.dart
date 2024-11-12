@@ -51,16 +51,11 @@ class NumberPicker extends StatelessWidget {
     this.label,
     this.labelPadding,
     this.labelAlignment = Alignment.center,
-  })  : assert(min != null),
-        assert(max != null),
-        assert(min <= max),
-        assert(diameterRatio != null),
+  })  : assert(min <= max),
         assert(diameterRatio > 0.0,
             RenderListWheelViewport.diameterRatioZeroMessage),
         assert(magnification > 0),
-        assert(itemExtent != null),
         assert(itemExtent > 0),
-        assert(squeeze != null),
         assert(squeeze > 0),
         super(key: key);
 
