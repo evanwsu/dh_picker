@@ -3,7 +3,7 @@
 
 ```
 dependencies:
-  dh_picker: ^1.0.0
+  dh_picker: ^1.0.6
 ```
 
 `num_picker` 数字选择器
